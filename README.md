@@ -68,3 +68,14 @@ Each card now includes:
 - Journal prompt
 
 Tarot interpretations are original educational writings based on traditional tarot symbolism and the Black Poppy Magik ritual framework. They are not copied from The Tarot Guide, Tarot.com, or any third-party tarot guide.
+
+
+# v14 Training Foundation
+
+This regenerated package keeps the v13 tarot learning upgrade and adds the Training Foundation framing.
+
+Upload only:
+- index.html
+- README.md
+
+This is a static GitHub Pages package.
