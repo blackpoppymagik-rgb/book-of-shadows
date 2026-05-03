@@ -621,6 +621,107 @@
       color: rgba(45,41,39,0.42);
     }
 
+
+    /* Organic grimoire layout: less perfect, more hand-laid */
+    .refined-nav .center-mark {
+      flex: 1;
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: 0.34em;
+      color: rgba(45,41,39,0.38);
+      text-transform: uppercase;
+    }
+
+    .right-mark {
+      justify-content: flex-end;
+      color: rgba(45,41,39,0.48);
+    }
+
+    .sheet,
+    .leaf,
+    .archive-rail,
+    .ribbon {
+      border-radius: 26px 18px 30px 14px;
+    }
+
+    .composition > div:first-child .sheet:nth-child(1) {
+      transform: rotate(-0.45deg);
+      border-radius: 34px 18px 24px 12px;
+    }
+
+    .composition > div:first-child .sheet:nth-child(2) {
+      transform: rotate(0.38deg) translateX(8px);
+      border-radius: 18px 32px 12px 28px;
+    }
+
+    .tarot-stage {
+      transform: rotate(0.18deg);
+      border-radius: 210px 190px 38px 52px;
+    }
+
+    .ribbon:nth-child(odd) {
+      transform: translateX(-10px) rotate(-0.25deg);
+      border-radius: 4px 30px 20px 2px;
+    }
+
+    .ribbon:nth-child(even) {
+      transform: translateX(8px) rotate(0.28deg);
+      border-radius: 28px 4px 2px 22px;
+      border-left-color: rgba(45,41,39,0.14);
+      border-right: 2px solid rgba(184,167,202,0.42);
+    }
+
+    .journal-river .leaf:nth-child(1) {
+      transform: rotate(-0.35deg);
+      border-radius: 34px 16px 28px 12px;
+    }
+
+    .journal-river .leaf:nth-child(2) {
+      transform: rotate(0.22deg) translateY(16px);
+      border-radius: 18px 36px 12px 30px;
+    }
+
+    .journal-river .leaf:nth-child(3) {
+      transform: rotate(-0.15deg) translateY(4px);
+      border-radius: 30px 22px 34px 10px;
+    }
+
+    .archive-river .archive-rail:nth-child(1) {
+      transform: rotate(0.18deg);
+      border-radius: 36px 18px 32px 14px;
+    }
+
+    .sub-grid .archive-rail:nth-child(1) {
+      transform: rotate(-0.22deg);
+      border-radius: 22px 34px 12px 28px;
+    }
+
+    .sub-grid .archive-rail:nth-child(2) {
+      transform: rotate(0.24deg) translateX(10px);
+      border-radius: 30px 12px 34px 18px;
+    }
+
+    .sheet::after,
+    .leaf::after,
+    .archive-rail::after {
+      content: "";
+      position: absolute;
+      inset: auto 28px 12px 28px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(184,167,202,0.42), transparent);
+      opacity: 0.72;
+    }
+
+    .ribbon::before {
+      content: "✧";
+      position: absolute;
+      right: 16px;
+      top: 12px;
+      color: var(--accent);
+      opacity: 0.46;
+      font-size: 13px;
+    }
+
     @media (max-width: 1180px) {
       .composition {
         grid-template-columns: 1fr;
@@ -737,10 +838,10 @@
       </svg>
 
       <div class="content-layer">
-        <div class="micro-nav">
+        <div class="micro-nav refined-nav">
           <div class="edge">Black Poppy Magik <em style="letter-spacing:0; text-transform:none; font-style:italic; color:var(--accent);">& Apothecary</em></div>
-          <div class="links"><span>About</span><span>Readings</span><span>Grimoire</span><span>Archive</span></div>
-          <div class="edge"><span>11:11</span><button class="pill" type="button" id="archiveShortcut">Open Archive</button></div>
+          <div class="center-mark">✦ &nbsp;11:11&nbsp; ✦</div>
+          <div class="edge right-mark">Book of Shadows</div>
         </div>
 
         <section class="view landing-view active" id="landingView">
@@ -753,7 +854,7 @@
           <div class="divider-glyph">✦</div>
           <div class="action-row">
             <button class="pill dark" type="button" id="enterRitual">Enter Today's Ritual</button>
-            <button class="pill" type="button" id="jumpArchive">Open the Archive</button>
+            <button class="pill" type="button" id="jumpArchive">Open Saved Pages</button>
           </div>
         </section>
 
@@ -761,7 +862,7 @@
           <div class="page-header">
             <div class="rule"></div>
             <div class="page-title-block">
-              <div class="page-kicker">Daily Codex · Black Poppy Magik</div>
+              <div class="page-kicker">Daily Ritual · Black Poppy Magik</div>
               <h2>Today's Ritual</h2>
               <div class="page-sub" id="dailyStatement">The page listens. The symbols answer.</div>
             </div>
@@ -813,7 +914,7 @@
           <section class="archive-river" id="archiveSection">
             <article class="archive-rail">
               <div class="archive-label">Saved Daily Rituals</div>
-              <h3>Snapshots</h3>
+              <h3>Saved Pages</h3>
               <p>Saved currents of the day: moon, astrology, tarot, spell, chant, beauty, care, kindness, and the sharp little quote.</p>
               <div class="archive-list" id="snapshotList"></div>
             </article>
@@ -825,7 +926,7 @@
               </article>
               <article class="archive-rail">
                 <div class="archive-label">Dreams + Signs</div>
-                <h3>The Strange Archive</h3>
+                <h3>The Strange Record</h3>
                 <div class="archive-list" id="dreamSignList"></div>
               </article>
             </div>
@@ -943,7 +1044,7 @@
       "Ground before you interpret. Name before you perform. Save what matters.",
       "The page listens. The symbols answer.",
       "Tell the truth, even when it ruins the costume.",
-      "Protect the energy. Archive the lesson.",
+      "Protect the energy. Keep the lesson.",
       "Your ritual is a structure, not a performance."
     ];
 
@@ -1224,11 +1325,14 @@
       setTimeout(() => document.getElementById('archiveSection').scrollIntoView({ behavior: 'smooth' }), 120);
     });
 
-    document.getElementById('archiveShortcut').addEventListener('click', () => {
-      document.getElementById('landingView').classList.remove('active');
-      document.getElementById('ritualView').classList.add('active');
-      setTimeout(() => document.getElementById('archiveSection').scrollIntoView({ behavior: 'smooth' }), 120);
-    });
+    const archiveShortcut = document.getElementById('archiveShortcut');
+    if (archiveShortcut) {
+      archiveShortcut.addEventListener('click', () => {
+        document.getElementById('landingView').classList.remove('active');
+        document.getElementById('ritualView').classList.add('active');
+        setTimeout(() => document.getElementById('archiveSection').scrollIntoView({ behavior: 'smooth' }), 120);
+      });
+    }
 
     document.getElementById('saveRitual').addEventListener('click', () => saveJournal('ritualEntries', 'ritualInput'));
     document.getElementById('saveDream').addEventListener('click', () => saveJournal('dreamEntries', 'dreamInput'));

@@ -1,29 +1,7 @@
-# Book of Shadows · Master Web Design Reset
+# Book of Shadows · Master Web Design Reset v2
 
-This package is a static GitHub Pages version of **Book of Shadows** for Black Poppy Magik Apothecary.
+This update removes generic top navigation, replaces “Codex” language with Daily Ritual language, and makes the layout less box-perfect and more organic/editorial.
 
-## Included
-- Full editorial botanical redesign
-- Original tarot-card stage (not copyrighted deck art)
-- Moon Current
-- Astrology Current
-- Spell of the Day
-- Chant of the Day
-- Beauty Affirmation
-- Self-Care Ritual
-- Sacred Act of Kindness
-- Snarky Baby Witches quote
-- Ritual Journal
-- Dream Journal
-- Signs & Synchronicities
-- Daily ritual snapshots
-- Local archive saved in browser storage
-
-## Upload
 Upload these files to your `book-of-shadows` GitHub repository:
 - `index.html`
 - `README.md`
-
-Then enable GitHub Pages from:
-- Branch: `main`
-- Folder: `/root`
