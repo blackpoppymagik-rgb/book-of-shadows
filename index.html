@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book of Shadows | Black Poppy Magik Apothecary</title>
+  <style>
+    :root {
+      --parchment: #f3eee6;
+      --warm-paper: #e9ddd0;
+      --paper-shadow: rgba(58, 47, 40, 0.08);
+      --ink: #2f2a26;
+      --soft-ink: rgba(47, 42, 38, 0.72);
+      --line: rgba(47, 42, 38, 0.18);
+      --veil: rgba(255, 255, 255, 0.28);
+      --mist: rgba(255, 255, 255, 0.18);
+      --poppy: #7f2230;
+      --deep-poppy: #4c121d;
+      --dusty-rose: #b88f93;
+      --smoke: #8e857c;
+      --silver: #b7b1a8;
+      --shadow: rgba(32, 24, 20, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.38), transparent 31%),
+        radial-gradient(circle at bottom right, rgba(127,34,48,0.075), transparent 24%),
+        linear-gradient(180deg, #f8f4ee 0%, var(--parchment) 42%, var(--warm-paper) 100%);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .landing-page,
+    .grimoire-page {
+      min-height: 100vh;
+      padding: 28px;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.42), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,0.18), rgba(0,0,0,0));
+      position: relative;
+    }
+
+    .landing-frame,
+    .frame {
+      position: relative;
+      max-width: 1120px;
+      min-height: calc(100vh - 56px);
+      margin: 0 auto;
+      padding: 58px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,255,255,0.12)),
+        rgba(255,255,255,0.16);
+      border: 1px solid rgba(47, 42, 38, 0.22);
+      outline: 1px solid rgba(47, 42, 38, 0.08);
+      outline-offset: -10px;
+      box-shadow:
+        0 28px 80px var(--paper-shadow),
+        inset 0 0 0 1px rgba(255,255,255,0.18);
+      overflow: hidden;
+      backdrop-filter: blur(1px);
+      animation: inkBreath 16s ease-in-out infinite;
+    }
+
+    .landing-frame {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .landing-frame::before,
+    .frame::before {
+      content: "";
+      position: absolute;
+      inset: 20px;
+      border: 1px solid rgba(47, 42, 38, 0.12);
+      pointer-events: none;
+    }
+
+    .landing-frame::after,
+    .frame::after {
+      content: "✦  11:11  ✦";
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: rotate(-90deg) translateX(-50%);
+      transform-origin: left center;
+      letter-spacing: 0.28em;
+      font-size: 11px;
+      color: rgba(47, 42, 38, 0.45);
+      pointer-events: none;
+    }
+
+    .brand {
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      font-size: 11px;
+      color: var(--soft-ink);
+      margin-bottom: 16px;
+    }
+
+    .brand::before,
+    .brand::after {
+      content: "✿";
+      color: var(--poppy);
+      opacity: 0.72;
+      margin: 0 14px;
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+      font-size: clamp(44px, 7vw, 84px);
+      line-height: 1.05;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      color: var(--ink);
+    }
+
+    h1::after {
+      content: "";
+      display: block;
+      width: 150px;
+      height: 1px;
+      margin: 24px auto 0;
+      background: linear-gradient(90deg, transparent, rgba(47, 42, 38, 0.38), transparent);
+    }
+
+    .subtitle,
+    .landing-copy {
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    .subtitle {
+      margin-top: 18px;
+      margin-bottom: 22px;
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--soft-ink);
+    }
+
+    .landing-copy {
+      margin-top: 0;
+      margin-bottom: 32px;
+      font-size: 18px;
+      line-height: 1.85;
+      color: rgba(47, 42, 38, 0.78);
+    }
+
+    .hidden { display: none; }
+
+    .daily-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    .card,
+    .journal-section,
+    .archive {
+      position: relative;
+      margin-top: 22px;
+      padding: 24px 24px 22px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.18)),
+        var(--veil);
+      box-shadow:
+        0 14px 34px rgba(47, 42, 38, 0.05),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+      overflow: hidden;
+    }
+
+    .card::before,
+    .journal-section::before,
+    .archive::before {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(47, 42, 38, 0.07);
+      border-radius: 14px;
+      pointer-events: none;
+    }
+
+    .card.wide { grid-column: span 2; }
+
+    h2, h3 {
+      margin-top: 0;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+    }
+
+    h2 { font-size: 22px; }
+    h3 { font-size: 18px; margin-bottom: 10px; }
+
+    p {
+      line-height: 1.7;
+      color: rgba(47, 42, 38, 0.88);
+    }
+
+    strong { color: var(--deep-poppy); }
+
+    .quote {
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--deep-poppy);
+      font-style: italic;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 155px;
+      margin-top: 12px;
+      padding: 18px;
+      border: 1px solid rgba(47, 42, 38, 0.22);
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.4));
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+      line-height: 1.65;
+      resize: vertical;
+      box-shadow: inset 0 1px 4px rgba(47, 42, 38, 0.04);
+    }
+
+    textarea::placeholder {
+      color: rgba(47, 42, 38, 0.5);
+      font-style: italic;
+    }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 18px auto 0;
+      padding: 13px 28px;
+      border: 1px solid rgba(47, 42, 38, 0.8);
+      border-radius: 999px;
+      background:
+        linear-gradient(180deg, rgba(47,42,38,0.95), rgba(47,42,38,0.85));
+      color: var(--parchment);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 10px 24px rgba(47, 42, 38, 0.14);
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      background: transparent;
+      color: var(--ink);
+      box-shadow: 0 10px 24px rgba(47, 42, 38, 0.08);
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .entry {
+      margin-top: 14px;
+      padding: 16px;
+      border: 1px solid rgba(47, 42, 38, 0.12);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.35);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.16);
+    }
+
+    .entry strong {
+      display: inline-block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      opacity: 0.75;
+      color: var(--soft-ink);
+    }
+
+    .entry p { margin: 0; }
+
+    .empty {
+      color: var(--soft-ink);
+      font-style: italic;
+    }
+
+    .top-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .ghost-button {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    @keyframes inkBreath {
+      0%, 100% { filter: contrast(0.99) brightness(1); }
+      50% { filter: contrast(1.03) brightness(0.995); }
+    }
+
+    @media (max-width: 900px) {
+      .daily-grid, .archive-grid { grid-template-columns: 1fr; }
+      .card.wide { grid-column: span 1; }
+    }
+
+    @media (max-width: 800px) {
+      .landing-page, .grimoire-page { padding: 14px; }
+      .landing-frame, .frame { padding: 34px 22px; }
+      .landing-frame::after, .frame::after { display: none; }
+      .subtitle, .landing-copy { font-size: 16px; }
+      h2 { font-size: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main id="landing" class="landing-page">
+    <section class="landing-frame">
+      <p class="brand">Black Poppy Magik Apothecary</p>
+      <h1>Book of Shadows</h1>
+      <p class="subtitle">Protection · Reclamation · Sacred Truth · Becoming</p>
+      <p class="landing-copy">
+        A living ritual system for moonwork, tarot, beauty magik, dreams,
+        signs, synchronicities, and personal sovereignty.
+      </p>
+      <button id="enterButton">Enter Today’s Ritual</button>
+    </section>
+  </main>
+
+  <main id="app" class="grimoire-page hidden">
+    <section class="frame">
+      <div class="top-actions">
+        <button id="homeButton" class="ghost-button">Return to Cover</button>
+        <button id="clearButton" class="ghost-button">Clear Local Archive</button>
+      </div>
+
+      <p class="brand">Black Poppy Magik Apothecary</p>
+      <h1>Book of Shadows</h1>
+      <p class="subtitle">Your power. Your system. Your reality.</p>
+
+      <section class="daily-grid">
+        <article class="card wide">
+          <h2>Moon Current</h2>
+          <p><strong>Date:</strong> <span id="moonDate"></span></p>
+          <p><strong>Phase:</strong> <span id="moonPhase"></span></p>
+          <p><strong>Type:</strong> <span id="moonType"></span></p>
+          <p><strong>Ritual:</strong> <span id="moonRitual"></span></p>
+          <p><strong>Beauty Magik:</strong> <span id="moonBeauty"></span></p>
+          <p><strong>House Practice:</strong> <span id="moonHouse"></span></p>
+        </article>
+
+        <article class="card">
+          <h2>Tarot Card of the Day</h2>
+          <p><strong id="tarotName"></strong></p>
+          <p id="tarotMeaning"></p>
+          <p><strong>Lesson:</strong> <span id="tarotLesson"></span></p>
+        </article>
+
+        <article class="card">
+          <h2>Spell of the Day</h2>
+          <p><strong id="spellTitle"></strong></p>
+          <p id="spellText"></p>
+        </article>
+
+        <article class="card">
+          <h2>Chant of the Day</h2>
+          <p id="chantText" class="quote"></p>
+        </article>
+
+        <article class="card">
+          <h2>Beauty Affirmation</h2>
+          <p id="beautyText" class="quote"></p>
+        </article>
+
+        <article class="card">
+          <h2>Self-Care Ritual</h2>
+          <p id="selfCareText"></p>
+        </article>
+
+        <article class="card">
+          <h2>Sacred Act of Kindness</h2>
+          <p id="kindnessText"></p>
+        </article>
+
+        <article class="card">
+          <h2>Snarky Baby Witches</h2>
+          <p id="babyWitchText"></p>
+        </article>
+      </section>
+
+      <section class="journal-section">
+        <h2>Ritual Journal</h2>
+        <textarea id="ritualText" placeholder="Name the truth. Protect the energy. Build the system."></textarea>
+        <button data-save="ritualEntries" data-textarea="ritualText">Save Ritual Page</button>
+      </section>
+
+      <section class="journal-section">
+        <h2>Dream Journal</h2>
+        <textarea id="dreamText" placeholder="Record dreams, symbols, visitors, places, colors, animals, and anything that stayed with you."></textarea>
+        <button data-save="dreamEntries" data-textarea="dreamText">Save Dream Page</button>
+      </section>
+
+      <section class="journal-section">
+        <h2>Signs & Synchronicities</h2>
+        <textarea id="signText" placeholder="11:11, animals, songs, names, repeated symbols, timing, odd little lightning strikes."></textarea>
+        <button data-save="synchronicityEntries" data-textarea="signText">Save Sign</button>
+      </section>
+
+      <section class="archive">
+        <h2>Saved Pages</h2>
+        <div class="archive-grid">
+          <div>
+            <h3>Ritual Pages</h3>
+            <div id="ritualArchive"></div>
+          </div>
+          <div>
+            <h3>Dream Pages</h3>
+            <div id="dreamArchive"></div>
+          </div>
+          <div>
+            <h3>Signs</h3>
+            <div id="signArchive"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const tarotDeck = [
+      {
+        name: "The Fool",
+        upright: "A threshold. A beginning. The first step before the map exists.",
+        reversed: "Hesitation, avoidance, or pretending you need permission to begin.",
+        lesson: "Where are you waiting for certainty instead of trusting movement?"
+      },
+      {
+        name: "The Magician",
+        upright: "Power made practical. Tools, focus, skill, and directed will.",
+        reversed: "Scattered energy, misused influence, or forgetting what is already in your hands.",
+        lesson: "What tool, skill, or truth are you underusing?"
+      },
+      {
+        name: "The High Priestess",
+        upright: "Inner knowing, silence, intuition, and sacred information not yet spoken.",
+        reversed: "Ignoring your instincts or asking others to confirm what your body already named.",
+        lesson: "What do you know, but keep negotiating with?"
+      },
+      {
+        name: "Death",
+        upright: "Transformation, ending, release, and the structure required for rebirth.",
+        reversed: "Resistance, stagnation, fear of becoming someone new.",
+        lesson: "What must end so the next version of you can breathe?"
+      },
+      {
+        name: "The Star",
+        upright: "Healing, renewal, protection after collapse, and quiet faith returning.",
+        reversed: "Doubt, spiritual fatigue, or forgetting that restoration is still movement.",
+        lesson: "Where can you let yourself believe again without performing certainty?"
+      }
+    ];
+
+    const spells = [
+      { title: "Protection Practice", text: "Before opening your phone, place one hand on your chest and say: My energy is not public property." },
+      { title: "Threshold Clearing", text: "Stand in a doorway. Breathe once for what enters, once for what leaves. Name one thing that no longer has permission." },
+      { title: "Power Recall", text: "Say: I call my power back from every room where I left it trying to be understood." },
+      { title: "Truth Naming", text: "Write one sentence that tells the truth without decorating it. The truth does not need costume jewelry." },
+      { title: "Silver Thread", text: "Touch something silver or gray. Name one boundary that protects your becoming." }
+    ];
+
+    const chants = [
+      "I protect. I reclaim. I name truth.",
+      "My power. My system. My reality.",
+      "I write the story. I command the outcome.",
+      "Still here. Still holding. Still becoming.",
+      "I call my energy back and place it where it belongs."
+    ];
+
+    const beautyAffirmations = [
+      "I do not decorate myself for approval. I tend myself as proof that I am still here.",
+      "My beauty is not an apology. It is evidence of becoming.",
+      "I am allowed to be powerful, moisturized, and inconvenient to weak expectations.",
+      "I do not shrink to be easier to love.",
+      "My face, my body, my presence: all under my authority."
+    ];
+
+    const selfCareRituals = [
+      "Wash your face like you are removing every opinion that never belonged to you.",
+      "Drink water before you interpret the universe. Sometimes the omen is dehydration.",
+      "Brush your hair slowly. Call your power back strand by strand.",
+      "Put lotion on like devotion. You are not a machine with errands.",
+      "Clean one small surface. Physical order gives your nervous system a place to land."
+    ];
+
+    const kindnessActs = [
+      "Compliment someone with specificity. Cute is lazy. Tell them what actually shines.",
+      "Send the message you keep meaning to send. Love does not always need ceremony.",
+      "Let someone be complicated without making them perform an explanation.",
+      "Leave one space better than you found it.",
+      "Offer help quietly. Sacred kindness does not need a parade."
+    ];
+
+    const babyWitchQuotes = [
+      "Not every sign is a sign. Sometimes it is your nervous system asking for water.",
+      "Today’s spell is boundaries. Yes, that means not answering the text.",
+      "Before you hex the situation, try sleeping and eating something with protein.",
+      "Your intuition is not the same thing as spiraling. Learn the difference, little lightning rod.",
+      "A candle is not a substitute for accountability. Pretty flame, still your problem."
+    ];
+
+    function hashSeed(seed) {
+      let hash = 0;
+      for (let i = 0; i < seed.length; i++) {
+        hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      return Math.abs(hash);
+    }
+
+    function getDailyItem(items, salt) {
+      return items[hashSeed(new Date().toDateString() + salt) % items.length];
+    }
+
+    function getMoonData() {
+      const today = new Date();
+      const day = today.getDate();
+
+      if (day < 7) {
+        return {
+          date: today.toLocaleDateString(),
+          phase: "New Moon",
+          type: "Seed Phase / Quiet Beginning",
+          ritual: "Name what you are calling in. Keep it clean. Keep it honest. Do not announce the seed before it roots.",
+          beauty: "Reset. Clean skin, clean tools, clean intention.",
+          house: "Clear one neglected corner. New cycles need space."
+        };
+      }
+
+      if (day < 14) {
+        return {
+          date: today.toLocaleDateString(),
+          phase: "Waxing Moon",
+          type: "Growth Phase / Building Power",
+          ritual: "Feed what you started. One practical action. No overexplaining.",
+          beauty: "Hydrate, strengthen, nourish. Build the glow like structure, not luck.",
+          house: "Organize what supports momentum."
+        };
+      }
+
+      if (day < 21) {
+        return {
+          date: today.toLocaleDateString(),
+          phase: "Full Moon",
+          type: "Illumination Phase / Release + Charge",
+          ritual: "Make moon water, charge crystals, cleanse your tools, and name what is done taking from you.",
+          beauty: "Glow rituals, baths, oils, body care. Radiance as reclamation.",
+          house: "Cleanse the house with sound, smoke, sweeping, or open windows."
+        };
+      }
+
+      return {
+        date: today.toLocaleDateString(),
+        phase: "Waning Moon",
+        type: "Release Phase / Clearing + Integration",
+        ritual: "Let it fall away without chasing it down the road. Release is still an action.",
+        beauty: "Detox, simplify, trim, soften. Less performance, more repair.",
+        house: "Declutter aggressively. The dead weight knows where it lives."
+      };
+    }
+
+    function setText(id, text) {
+      document.getElementById(id).textContent = text;
+    }
+
+    function loadEntries(key) {
+      return JSON.parse(localStorage.getItem(key)) || [];
+    }
+
+    function saveEntry(key, textareaId) {
+      const textarea = document.getElementById(textareaId);
+      const text = textarea.value.trim();
+      if (!text) return;
+
+      const entry = { text, date: new Date().toLocaleString() };
+      const entries = [entry, ...loadEntries(key)];
+      localStorage.setItem(key, JSON.stringify(entries));
+      textarea.value = "";
+      renderArchives();
+    }
+
+    function renderArchive(key, containerId, emptyText) {
+      const container = document.getElementById(containerId);
+      const entries = loadEntries(key);
+
+      if (!entries.length) {
+        container.innerHTML = `<p class="empty">${emptyText}</p>`;
+        return;
+      }
+
+      container.innerHTML = entries.map(entry => `
+        <article class="entry">
+          <strong>${entry.date}</strong>
+          <p>${entry.text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>
+        </article>
+      `).join("");
+    }
+
+    function renderArchives() {
+      renderArchive("ritualEntries", "ritualArchive", "No ritual pages yet.");
+      renderArchive("dreamEntries", "dreamArchive", "No dreams recorded yet.");
+      renderArchive("synchronicityEntries", "signArchive", "No signs recorded yet.");
+    }
+
+    function hydrateDailyDashboard() {
+      const moon = getMoonData();
+      setText("moonDate", moon.date);
+      setText("moonPhase", moon.phase);
+      setText("moonType", moon.type);
+      setText("moonRitual", moon.ritual);
+      setText("moonBeauty", moon.beauty);
+      setText("moonHouse", moon.house);
+
+      const tarot = getDailyItem(tarotDeck, "tarot");
+      const reversed = hashSeed(new Date().toDateString() + "tarot-reversed") % 2 === 0;
+      setText("tarotName", `${tarot.name} ${reversed ? "(Reversed)" : "(Upright)"}`);
+      setText("tarotMeaning", reversed ? tarot.reversed : tarot.upright);
+      setText("tarotLesson", tarot.lesson);
+
+      const spell = getDailyItem(spells, "spell");
+      setText("spellTitle", spell.title);
+      setText("spellText", spell.text);
+
+      setText("chantText", getDailyItem(chants, "chant"));
+      setText("beautyText", getDailyItem(beautyAffirmations, "beauty"));
+      setText("selfCareText", getDailyItem(selfCareRituals, "selfcare"));
+      setText("kindnessText", getDailyItem(kindnessActs, "kindness"));
+      setText("babyWitchText", getDailyItem(babyWitchQuotes, "babywitch"));
+    }
+
+    document.getElementById("enterButton").addEventListener("click", () => {
+      document.getElementById("landing").classList.add("hidden");
+      document.getElementById("app").classList.remove("hidden");
+      hydrateDailyDashboard();
+      renderArchives();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("homeButton").addEventListener("click", () => {
+      document.getElementById("app").classList.add("hidden");
+      document.getElementById("landing").classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("clearButton").addEventListener("click", () => {
+      const ok = confirm("Clear saved local pages on this device?");
+      if (!ok) return;
+      localStorage.removeItem("ritualEntries");
+      localStorage.removeItem("dreamEntries");
+      localStorage.removeItem("synchronicityEntries");
+      renderArchives();
+    });
+
+    document.querySelectorAll("[data-save]").forEach(button => {
+      button.addEventListener("click", () => {
+        saveEntry(button.dataset.save, button.dataset.textarea);
+      });
+    });
+  </script>
+</body>
+</html>
