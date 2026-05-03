@@ -738,6 +738,62 @@
       color: #f4f0e8;
     }
 
+
+    .ritual-control-strip {
+      margin: 0 auto 32px;
+      max-width: 980px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px;
+      border-top: 1px solid rgba(45,41,39,0.10);
+      border-bottom: 1px solid rgba(45,41,39,0.10);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.24), transparent);
+    }
+
+    .ink-control,
+    .ritual-control-strip button {
+      appearance: none;
+      border: 1px solid rgba(45,41,39,0.34);
+      background: rgba(255,255,255,0.42);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 10px 15px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 10px;
+      line-height: 1;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(22,17,14,0.04);
+      transition: transform 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
+    }
+
+    .ink-control:hover,
+    .ritual-control-strip button:hover {
+      transform: translateY(-1px);
+      background: var(--dark);
+      color: #f4f0e8;
+      border-color: var(--dark);
+    }
+
+    .ink-control.primary {
+      background: var(--dark);
+      color: #f4f0e8;
+      border-color: var(--dark);
+    }
+
+    .local-action-row {
+      display: flex;
+      justify-content: center;
+      margin: 14px 0 0;
+    }
+
+    .ribbon .local-action-row {
+      justify-content: flex-start;
+    }
+
     .ribbon:nth-child(2n) { transform: translateX(8px); }
     .ribbon:nth-child(3n) { transform: translateX(-5px); border-radius: 24px 0 24px 0; }
     .ribbon:nth-child(4n) { transform: rotate(-0.35deg); }
@@ -892,6 +948,18 @@
               <div class="page-sub" id="dailyStatement">The page listens. The symbols answer.</div>
             </div>
             <div class="rule"></div>
+          </div>
+
+          <div class="ritual-control-strip" aria-label="Ritual refresh controls">
+            <button class="ink-control primary" type="button" id="refreshAll">Refresh All Ritual Notes</button>
+            <button class="ink-control" type="button" id="controlNewTarot">New Card</button>
+            <button class="ink-control" type="button" data-reroll="spell">New Spell</button>
+            <button class="ink-control" type="button" data-reroll="chant">New Chant</button>
+            <button class="ink-control" type="button" data-reroll="beauty">New Beauty</button>
+            <button class="ink-control" type="button" data-reroll="care">New Care</button>
+            <button class="ink-control" type="button" data-reroll="kind">New Kindness</button>
+            <button class="ink-control" type="button" data-reroll="quote">New Quote</button>
+            <button class="ink-control primary" type="button" id="saveTodayTop">Save Today</button>
           </div>
 
           <div class="composition">
@@ -1256,7 +1324,7 @@
           <div class="entry-line"><span class="mini">Lesson</span><p>${tarot.lesson}</p></div>
           <div class="entry-line"><span class="mini">Shadow Check</span><p>${tarot.shadow}</p></div>
           <div class="entry-line"><span class="mini">Journal Prompt</span><p>${tarot.prompt}</p></div>
-          <button class="pill tiny-action" type="button" id="newTarot">New Card</button>
+          <button class="ink-control tiny-action" type="button" id="newTarot">New Card</button>
         </div>
       `;
 
@@ -1276,12 +1344,27 @@
           <div class="ribbon-label">${item.label}</div>
           <div class="ribbon-title">${item.title}</div>
           <p>${item.text}</p>
-          <button class="pill tiny-action" type="button" data-reroll="${item.key}">${item.action}</button>
+          <button class="ink-control tiny-action" type="button" data-reroll="${item.key}">${item.action}</button>
         `);
         stack.appendChild(node);
       });
 
-      document.getElementById('newTarot').addEventListener('click', () => rerollDaily('tarot'));
+      const tarotButton = document.getElementById('newTarot');
+      if (tarotButton) tarotButton.addEventListener('click', () => rerollDaily('tarot'));
+
+      const controlNewTarot = document.getElementById('controlNewTarot');
+      if (controlNewTarot) controlNewTarot.addEventListener('click', () => rerollDaily('tarot'));
+
+      const refreshAll = document.getElementById('refreshAll');
+      if (refreshAll) {
+        refreshAll.addEventListener('click', () => {
+          ['tarot', 'spell', 'chant', 'beauty', 'care', 'kind', 'quote', 'statement'].forEach((key) => {
+            rerollCounts[key] = (rerollCounts[key] || 0) + 1;
+          });
+          render();
+        });
+      }
+
       document.querySelectorAll('[data-reroll]').forEach(button => {
         button.addEventListener('click', () => rerollDaily(button.dataset.reroll));
       });
@@ -1378,12 +1461,16 @@
     document.getElementById('saveRitual').addEventListener('click', () => saveJournal('ritualEntries', 'ritualInput'));
     document.getElementById('saveDream').addEventListener('click', () => saveJournal('dreamEntries', 'dreamInput'));
     document.getElementById('saveSign').addEventListener('click', () => saveJournal('signEntries', 'signInput'));
-    document.getElementById('saveToday').addEventListener('click', () => {
+    function saveTodaySnapshot() {
       const list = load('dailySnapshots');
       list.unshift(window.dailySnapshot);
       save('dailySnapshots', list);
       renderArchives();
-    });
+    }
+
+    document.getElementById('saveToday').addEventListener('click', saveTodaySnapshot);
+    const saveTodayTop = document.getElementById('saveTodayTop');
+    if (saveTodayTop) saveTodayTop.addEventListener('click', saveTodaySnapshot);
 
     render();
   </script>

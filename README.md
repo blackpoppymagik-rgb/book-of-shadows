@@ -20,3 +20,7 @@ Upload these files to your `book-of-shadows` GitHub repository:
 - `README.md`
 
 Then commit changes.
+
+
+## v4 Update
+Visible reroll controls were added at the top of the ritual page and inside the daily ritual sections.
