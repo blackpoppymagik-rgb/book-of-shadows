@@ -1,7 +1,22 @@
-# Book of Shadows · Master Web Design Reset v2
+# Book of Shadows · Master Web Reset v3
 
-This update removes generic top navigation, replaces “Codex” language with Daily Ritual language, and makes the layout less box-perfect and more organic/editorial.
+This static GitHub Pages version adds reroll controls for the daily ritual pieces while keeping the organic editorial botanical design.
 
+## Included
+- New Card button
+- New Spell button
+- New Chant button
+- New Beauty button
+- New Care Ritual button
+- New Kindness button
+- New Snarky Quote button
+- Saved ritual snapshot saves whatever is currently displayed
+- Organic uneven panel layout
+- Botanical frame motifs
+
+## Upload
 Upload these files to your `book-of-shadows` GitHub repository:
 - `index.html`
 - `README.md`
+
+Then commit changes.

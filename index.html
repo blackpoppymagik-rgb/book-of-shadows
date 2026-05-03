@@ -722,6 +722,31 @@
       font-size: 13px;
     }
 
+
+    .tiny-action {
+      margin-top: 14px;
+      padding: 9px 14px;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      background: rgba(255,255,255,0.22);
+      color: var(--ink);
+      box-shadow: none;
+    }
+
+    .tiny-action:hover {
+      background: var(--dark);
+      color: #f4f0e8;
+    }
+
+    .ribbon:nth-child(2n) { transform: translateX(8px); }
+    .ribbon:nth-child(3n) { transform: translateX(-5px); border-radius: 24px 0 24px 0; }
+    .ribbon:nth-child(4n) { transform: rotate(-0.35deg); }
+    .sheet:nth-of-type(1) { transform: rotate(-0.25deg); }
+    .sheet:nth-of-type(2) { transform: rotate(0.35deg) translateX(5px); }
+    .leaf:nth-child(1) { transform: rotate(-0.2deg); }
+    .leaf:nth-child(2) { transform: translateY(18px) rotate(0.25deg); }
+    .leaf:nth-child(3) { transform: rotate(-0.15deg); }
+
     @media (max-width: 1180px) {
       .composition {
         grid-template-columns: 1fr;
@@ -1064,14 +1089,23 @@
       return Math.abs(hash);
     }
 
+    const rerollCounts = { tarot: 0, spell: 0, chant: 0, beauty: 0, care: 0, kind: 0, quote: 0, statement: 0 };
+
     function getDailyItem(arr, salt) {
-      return arr[getDailyIndex(salt) % arr.length];
+      const offset = rerollCounts[salt] || 0;
+      return arr[(getDailyIndex(salt) + offset) % arr.length];
+    }
+
+    function rerollDaily(salt) {
+      rerollCounts[salt] = (rerollCounts[salt] || 0) + 1;
+      render();
     }
 
     function getDailyTarot() {
       const hash = getDailyIndex('tarot');
-      const card = tarotDeck[hash % tarotDeck.length];
-      return { ...card, reversed: hash % 2 === 0 };
+      const offset = rerollCounts.tarot || 0;
+      const card = tarotDeck[(hash + offset) % tarotDeck.length];
+      return { ...card, reversed: (hash + offset) % 2 === 0 };
     }
 
     function getAstrologyData() {
@@ -1222,16 +1256,17 @@
           <div class="entry-line"><span class="mini">Lesson</span><p>${tarot.lesson}</p></div>
           <div class="entry-line"><span class="mini">Shadow Check</span><p>${tarot.shadow}</p></div>
           <div class="entry-line"><span class="mini">Journal Prompt</span><p>${tarot.prompt}</p></div>
+          <button class="pill tiny-action" type="button" id="newTarot">New Card</button>
         </div>
       `;
 
       const ribbons = [
-        { label: 'Spell of the Day', title: spell.title, text: spell.text },
-        { label: 'Chant of the Day', title: 'Modern Witch Chant', text: chant },
-        { label: 'Beauty Affirmation', title: 'Beauty Magik', text: beauty },
-        { label: 'Self-Care Ritual', title: 'Sacred Maintenance', text: care },
-        { label: 'Sacred Act of Kindness', title: 'Human-Scale Magik', text: kindness },
-        { label: 'Snarky Baby Witches', title: 'Quote of the Day', text: quote }
+        { key: 'spell', action: 'New Spell', label: 'Spell of the Day', title: spell.title, text: spell.text },
+        { key: 'chant', action: 'New Chant', label: 'Chant of the Day', title: 'Modern Witch Chant', text: chant },
+        { key: 'beauty', action: 'New Beauty', label: 'Beauty Affirmation', title: 'Beauty Magik', text: beauty },
+        { key: 'care', action: 'New Care Ritual', label: 'Self-Care Ritual', title: 'Sacred Maintenance', text: care },
+        { key: 'kind', action: 'New Kindness', label: 'Sacred Act of Kindness', title: 'Human-Scale Magik', text: kindness },
+        { key: 'quote', action: 'New Quote', label: 'Snarky Baby Witches', title: 'Quote of the Day', text: quote }
       ];
 
       const stack = document.getElementById('ribbonStack');
@@ -1241,8 +1276,14 @@
           <div class="ribbon-label">${item.label}</div>
           <div class="ribbon-title">${item.title}</div>
           <p>${item.text}</p>
+          <button class="pill tiny-action" type="button" data-reroll="${item.key}">${item.action}</button>
         `);
         stack.appendChild(node);
+      });
+
+      document.getElementById('newTarot').addEventListener('click', () => rerollDaily('tarot'));
+      document.querySelectorAll('[data-reroll]').forEach(button => {
+        button.addEventListener('click', () => rerollDaily(button.dataset.reroll));
       });
 
       const band = document.getElementById('elementalBand');
