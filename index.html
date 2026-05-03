@@ -1205,7 +1205,7 @@
           <h1 class="hero-title">BOOK OF<br>SHADOWS</h1>
           <div class="hero-script">The Living Grimoire</div>
           <div class="latin-line">Noli Illegitimi Carborundum</div>
-          <p class="hero-copy">A ritual archive for moonwork, astrology, tarot, beauty magik, dreams, signs, and the slow architecture of becoming.</p>
+          <p class="hero-copy">A ritual archive for moonwork, astrology, tarot, beauty magik, dreams, signs, Witch IT, and the slow architecture of becoming.</p>
           <p class="hero-support">Built in your voice: protective, symbolic, emotionally intelligent, and allergic to generic witch-app sludge.</p>
           <div class="divider-glyph">✦</div>
           <div class="action-row">
@@ -1234,7 +1234,12 @@
             <button class="ink-control" type="button" data-reroll="care">New Care</button>
             <button class="ink-control" type="button" data-reroll="kind">New Kindness</button>
             <button class="ink-control" type="button" data-reroll="quote">New Quote</button>
+            <button class="ink-control" type="button" data-reroll="witchit">New Witch IT Lesson</button>
             <button class="ink-control primary" type="button" id="saveTodayTop">Save Today</button>
+            <button class="ink-control" type="button" id="exportCsv">Export CSV</button>
+            <button class="ink-control" type="button" id="exportBackup">Export Backup</button>
+            <button class="ink-control" type="button" id="importBackupBtn">Import Backup</button>
+            <input id="importBackupFile" type="file" accept="application/json" style="display:none" />
           </div>
 
           <div class="composition">
@@ -2247,20 +2252,155 @@
 ];
 
     const spells = [
-      { title: "Threshold Clearing", text: "Stand in a doorway. Breathe once for what enters, once for what leaves. Name one thing that no longer has permission." },
-      { title: "Protection Practice", text: "Before opening your phone, place one hand on your chest and say: my energy is not public property." },
-      { title: "Power Recall", text: "Say: I call my power back from every room where I left it trying to be understood." },
-      { title: "Naming Spell", text: "Write one sentence that tells the truth without decorating it. Read it out loud once." },
-      { title: "Glamour Reset", text: "Anoint wrists or moisturize slowly while naming the qualities you want to embody instead of perform." }
-    ];
+      {
+            "title": "Salt Bowl Reset",
+            "text": "Place a small bowl of salt near your entryway for one day. As you set it down, name what is not allowed to follow you inside. Dispose of it outside or in the trash the next day. Do not reuse it."
+      },
+      {
+            "title": "Threshold Sweep",
+            "text": "Sweep your doorway from inside to outside. Say one clean boundary out loud. This is not about drama; it is about deciding what crosses the line."
+      },
+      {
+            "title": "Protection Candle Focus",
+            "text": "Light one candle. Sit with both feet on the floor. Name three things you are protecting: body, home, peace, work, grief, money, or time. Snuff the candle when finished."
+      },
+      {
+            "title": "Release Letter",
+            "text": "Write what you are done carrying. Do not make it pretty. Tear it into pieces and throw it away. Wash your hands after. The washing matters."
+      },
+      {
+            "title": "Water Bowl Release",
+            "text": "Fill a bowl with water. Speak one thing you are ready to loosen. Stir counterclockwise with your finger or spoon. Pour it down the drain and rinse the bowl."
+      },
+      {
+            "title": "Cord Naming Practice",
+            "text": "Write the name of a person, pattern, habit, or fear on paper. Draw a line between you and it. Say what the line cost you. Cut the paper in half."
+      },
+      {
+            "title": "Phone Boundary Spell",
+            "text": "Before checking messages, put your phone face down. Say: I choose when access begins. Then decide what actually deserves a response."
+      },
+      {
+            "title": "Mirror Truth Practice",
+            "text": "Look into the mirror for thirty seconds. Say one true sentence without insult and without performance. Truth first, decoration later."
+      },
+      {
+            "title": "House Breath Reset",
+            "text": "Open one window for three minutes. Stand still. Let the room exhale. Close the window and name the energy you are keeping."
+      },
+      {
+            "title": "Black Thread Boundary",
+            "text": "Tie a small black thread around a paper with one boundary written on it. Keep it near your desk, altar, or bag for seven days. Untie it when the boundary becomes action."
+      },
+      {
+            "title": "Ancestral Respect Practice",
+            "text": "Light a candle or place water in a clean cup. Say thank you to the helpful dead and no thank you to anything harmful. Respect does not require open doors."
+      },
+      {
+            "title": "Grounding Stone Practice",
+            "text": "Hold a stone, key, coin, or ring. Name five facts: where you are, what day it is, what you can touch, what you need, what is true."
+      },
+      {
+            "title": "Money Clarity Ritual",
+            "text": "Write down what came in, what went out, and what needs tending. Light no candle until the numbers are named. Money magik starts with honesty."
+      },
+      {
+            "title": "Beauty Shield",
+            "text": "Moisturize your face, throat, and hands. Say: what is mine stays with me; what is projected returns to its owner. Then go live your life."
+      },
+      {
+            "title": "Kitchen Protection",
+            "text": "Stir your drink clockwise and name what you are strengthening. Stir counterclockwise and name what you are releasing. Drink slowly, not dramatically."
+      },
+      {
+            "title": "Grief Container",
+            "text": "Choose a small object to hold grief for ten minutes. Speak to it. When time is done, place it somewhere safe. You are allowed to pause grief without betraying it."
+      },
+      {
+            "title": "Workday Ward",
+            "text": "Before starting work, draw a tiny X or dot on a sticky note. Place it near your workspace. It means: my attention has a gate."
+      },
+      {
+            "title": "Shower Clearing",
+            "text": "As water runs, name what belongs to you and what does not. Let the water take the second category. Dry off like you are sealing the boundary."
+      },
+      {
+            "title": "Name Retrieval",
+            "text": "Write the version of yourself you keep abandoning to be acceptable. Read the name out loud. Call that self back without apology."
+      },
+      {
+            "title": "Purse or Wallet Reset",
+            "text": "Empty your bag or wallet. Remove trash, receipts, and dead weight. Put one useful thing back with intention. Carry only what supports the day."
+      },
+      {
+            "title": "Bedside Closing Rite",
+            "text": "Before sleep, say: the day is closed, the body is safe, the mind may rest. Put one hand on your chest and one on your stomach."
+      },
+      {
+            "title": "Decision Candle",
+            "text": "Light a candle and write two options. Under each, write the cost, the truth, and the next step. Choose the option that makes you more honest, not more comfortable."
+      },
+      {
+            "title": "Boundary Ink",
+            "text": "Write one boundary on your wrist with invisible lotion, oil, or water. You do not need everyone to see a boundary for it to exist."
+      },
+      {
+            "title": "Object Cleansing",
+            "text": "Choose one object you use often. Wipe it clean. Say what work it does for you. Thank it. Put it back with intention."
+      },
+      {
+            "title": "Anger Transmutation",
+            "text": "Write the sentence: I am angry because ____. Then write: the action I can take is ____. Anger becomes useful when given a clean door."
+      },
+      {
+            "title": "Garden or Soil Grounding",
+            "text": "Touch soil, a plant, or a wooden surface. Name what you are growing and what you are pruning. Growth and removal are both care."
+      },
+      {
+            "title": "Social Energy Seal",
+            "text": "After leaving people, wash your hands or touch your chest. Say: I return to myself. Do not review every interaction like a courtroom transcript."
+      },
+      {
+            "title": "Seven-Breath Protection",
+            "text": "Inhale for four, exhale for six, seven times. On each exhale, imagine noise leaving your field. This is nervous-system magik, not fantasy."
+      },
+      {
+            "title": "Paper Anchor",
+            "text": "Write one word you need today: steady, clear, brave, soft, exact, protected. Fold it toward you. Carry it until evening."
+      },
+      {
+            "title": "Doorway Return",
+            "text": "When you come home, pause before entering. Say: I do not bring the whole world inside with me. Step in deliberately."
+      }
+];
 
     const chants = [
+      "I return to myself. I keep what is mine. I release what is not.",
+      "My attention has a gate, and I decide what enters.",
+      "I name the truth without dressing it for approval.",
+      "My peace is not public property.",
+      "I protect the body that carries me.",
+      "I do not confuse urgency with command.",
+      "I call my power back from every place I abandoned it.",
+      "What is mine stays. What is not mine leaves.",
+      "I choose the clean boundary over the familiar wound.",
+      "My voice is allowed to be simple, direct, and true.",
+      "I am not available for projection, performance, or energetic theft.",
+      "The door opens by my consent and closes by my authority.",
+      "I let the dead weight fall without chasing it down the road.",
+      "I stand in my name, my body, my system, my reality.",
+      "I can be kind without becoming available for harm.",
+      "The lesson is kept. The residue is released.",
+      "I do not worship chaos. I build structure from truth.",
+      "My energy returns to its proper house.",
+      "I am still here, still holding, still becoming.",
       "I protect. I reclaim. I name truth.",
-      "My power. My system. My reality.",
-      "I call my energy back and place it where it belongs.",
-      "Still here. Still holding. Still becoming.",
-      "I am not public property. My presence answers to me."
-    ];
+      "I move with discernment, not fear.",
+      "I honor the signal and dismiss the static.",
+      "I choose repair over performance.",
+      "I do not need permission to stop bleeding into old patterns.",
+      "The page receives the truth. The body receives the peace."
+];
 
     const beautyAffirmations = [
       "I do not decorate myself for approval. I tend myself as proof that I am still here.",
@@ -2302,6 +2442,82 @@
       "Your ritual is a structure, not a performance."
     ];
 
+
+    const witchITLessons = [
+      {
+        title: "Dream Pattern Sorter",
+        practice: "Paste a few dream notes into AI and ask it to list repeated symbols, emotions, colors, places, and people. Do not ask it to declare the meaning as fact.",
+        prompt: "Organize these dream notes into recurring symbols, emotions, locations, and questions. Do not make absolute claims. Ask me three reflective questions.",
+        boundary: "AI can sort the bones. You name the spirit."
+      },
+      {
+        title: "Tarot Journal Assistant",
+        practice: "Use AI to turn a tarot pull into a study page: card, keywords, body response, resistance, possible mundane meaning, and one next action.",
+        prompt: "Help me structure a tarot journal entry for this card. Include keywords, possible life areas, shadow themes, and 5 questions. Do not tell me what is absolutely true.",
+        boundary: "The card is a mirror. The machine is a notebook. You remain the reader."
+      },
+      {
+        title: "Ritual Safety Check",
+        practice: "Before trying a new practice, ask AI to list practical safety considerations: fire, pets, smoke, allergies, privacy, emotions, time, and cleanup.",
+        prompt: "Review this ritual plan for practical safety. Check for fire risk, smoke/pet concerns, allergies, emotional intensity, consent, cleanup, and simpler alternatives.",
+        boundary: "Practical safety is part of sacred authority."
+      },
+      {
+        title: "Moon Ritual Planner",
+        practice: "Use AI to turn the current moon phase into a simple ritual plan with supplies, time, journal prompt, and a grounded action step.",
+        prompt: "Create a simple moon ritual plan for this moon phase. Include supplies, timing, a journal prompt, a mundane action step, and a safety note. Keep it grounded.",
+        boundary: "AI can draft the structure. Your body decides what feels true."
+      },
+      {
+        title: "Symbol Index Builder",
+        practice: "Collect repeated symbols from dreams, signs, tarot, animals, numbers, songs, and phrases. Ask AI to organize them into a searchable index.",
+        prompt: "Turn these notes into a symbol index with categories, repeated themes, possible personal meanings, and questions for further reflection. Do not universalize the meanings.",
+        boundary: "A symbol becomes yours through pattern, context, and lived truth."
+      },
+      {
+        title: "Grimoire Page Formatter",
+        practice: "Use AI to clean messy notes into a beautiful grimoire page with sections, headings, supplies, steps, reflections, and warnings.",
+        prompt: "Format these messy ritual notes into a clean grimoire page. Keep my voice. Use headings, supplies, steps, reflection, and a practical caution section.",
+        boundary: "Formatting is not faking. It is giving your practice a spine."
+      },
+      {
+        title: "Ancestor Research Organizer",
+        practice: "Use AI to organize genealogy notes, locations, dates, questions, and missing records. Do not let it invent family history.",
+        prompt: "Organize these ancestor research notes into a timeline, open questions, possible records to look for, and contradictions. Do not fabricate missing facts.",
+        boundary: "AI may organize evidence. It does not get to invent your dead."
+      },
+      {
+        title: "Herb Research Checklist",
+        practice: "Ask AI to create a research checklist for an herb: folk use, mundane use, safety, contraindications, pets, pregnancy, sources, and alternatives.",
+        prompt: "Create a research checklist for this herb. Include folk associations, mundane uses, safety concerns, contraindications, pet concerns, and questions to verify with reliable sources.",
+        boundary: "Research first. Romance second. Never eat mystery leaves because the internet sounded poetic."
+      },
+      {
+        title: "Boundary Script Generator",
+        practice: "Use AI to draft three versions of a boundary: soft, direct, and final. Choose the one your nervous system can actually send.",
+        prompt: "Help me write a boundary message in three tones: gentle, direct, and final. Keep it calm, clear, and non-performative.",
+        boundary: "AI can draft the sentence. You choose the boundary."
+      },
+      {
+        title: "Pattern Tracker",
+        practice: "Paste several journal entries and ask AI to identify repeated words, themes, emotional loops, avoidance patterns, and places of growth.",
+        prompt: "Analyze these journal entries for repeated themes, emotional patterns, avoided truths, and possible growth areas. Reflect, do not diagnose.",
+        boundary: "Pattern recognition is useful. Diagnosis belongs to qualified humans."
+      },
+      {
+        title: "Spiritual Business Systems",
+        practice: "Use AI to turn your offerings, readings, products, posts, and ideas into a clean content calendar or shop workflow.",
+        prompt: "Organize these spiritual business ideas into offers, content themes, product ideas, next actions, and a simple weekly workflow. Keep my voice intact.",
+        boundary: "Systems protect the magic from burnout."
+      },
+      {
+        title: "Anti-Gatekeeping Reminder",
+        practice: "Use AI as a tool, not an altar. Let it help with research, structure, drafts, pattern tracking, and organization. Keep your intuition in command.",
+        prompt: "Help me create a grounded explanation of how AI can support intuitive practice without replacing intuition, consent, research, or lived wisdom.",
+        boundary: "You are not fake because you use tools. A pen is a tool. A candle is a tool. A database can be one too."
+      }
+    ];
+
     const elementals = [
       { name: "Fire", desc: "Ignites action, courage, appetite, heat.", icon: "✦" },
       { name: "Air", desc: "Carries language, pattern, movement, message.", icon: "☁" },
@@ -2318,7 +2534,7 @@
       return Math.abs(hash);
     }
 
-    const rerollCounts = { tarot: 0, spell: 0, chant: 0, beauty: 0, care: 0, kind: 0, quote: 0, statement: 0 };
+    const rerollCounts = { tarot: 0, spell: 0, chant: 0, beauty: 0, care: 0, kind: 0, quote: 0, witchit: 0, statement: 0 };
 
     function getDailyItem(arr, salt) {
       const offset = rerollCounts[salt] || 0;
@@ -2366,32 +2582,24 @@
     }
 
     function getMoonData() {
-      const phases = [
-        { name:'New Moon', kind:'Seed Phase', ritual:'Set clean intentions. Whisper instead of announce.', beauty:'Reset, clarify, cleanse skin and tools.', crystals:'Rest, reset, and softly recharge tools.', moonWater:'Best for intention water and beginning rites.', house:'Clear one neglected corner. Make space first.', shadow:'Do not confuse emptiness with failure.' },
-        { name:'Waxing Crescent', kind:'Build Phase', ritual:'Feed the thing you just began.', beauty:'Hydrate, strengthen, nourish slowly.', crystals:'Charge tools for momentum and protection.', moonWater:'Good for growth, attraction, and study.', house:'Organize what supports momentum.', shadow:'Do not overwater what has barely rooted.' },
-        { name:'First Quarter', kind:'Decision Phase', ritual:'Choose. Then move.', beauty:'Sharper lines, clearer choices, practical glamour.', crystals:'Strong time for protection and action grids.', moonWater:'Good for courage and threshold work.', house:'Handle the task you keep avoiding.', shadow:'Do not call procrastination discernment.' },
-        { name:'Waxing Gibbous', kind:'Refinement Phase', ritual:'Refine what is growing instead of abandoning it.', beauty:'Tend details. Small upgrades matter.', crystals:'Charge for skill, refinement, and focus.', moonWater:'Good for polish, consistency, and craft.', house:'Tidy the working surfaces.', shadow:'Do not let perfection stall momentum.' },
-        { name:'Full Moon', kind:'Illumination Phase', ritual:'Release, reveal, charge, and name what is done taking from you.', beauty:'Glow ritual, oils, baths, body care, radiance as reclamation.', crystals:'Peak cleansing and charging moment.', moonWater:'Best time for classic moon water.', house:'Sweep, smoke, sound, and open the windows.', shadow:'Do not confuse intensity with clarity.' },
-        { name:'Waning Gibbous', kind:'Integration Phase', ritual:'Review what the Full Moon revealed. Release what has already shown itself.', beauty:'Repair, soothe, hydrate, simplify.', crystals:'Excellent for cleansing after peak charge.', moonWater:'Better for release water, cleansing water, and banishing bowls.', house:'Clear surfaces, empty trash, wash linens.', shadow:'Let the dust settle before you declare a final meaning.' },
-        { name:'Last Quarter', kind:'Cutting Phase', ritual:'Sever the dead branch cleanly.', beauty:'Trim, detox, lighten, remove.', crystals:'Clear tools and simplify your altar.', moonWater:'Good for severing, boundary, and release rites.', house:'Declutter aggressively.', shadow:'Do not keep negotiating with expired energy.' },
-        { name:'Waning Crescent', kind:'Rest Phase', ritual:'Close the loop. Go quiet. Restore.', beauty:'Soft repair over performance.', crystals:'Rest the tools. Let them breathe.', moonWater:'Best for rest, dreamwork, and gentle clearing.', house:'Lower the noise. Reset the room.', shadow:'Not all stillness is stagnation.' }
-      ];
-      const cycleDay = ((new Date().getDate() - 1) % 29) + 1;
-      const phaseIndex = cycleDay < 3 ? 0 : cycleDay < 7 ? 1 : cycleDay < 11 ? 2 : cycleDay < 15 ? 3 : cycleDay < 18 ? 4 : cycleDay < 22 ? 5 : cycleDay < 26 ? 6 : 7;
-      const phase = phases[phaseIndex];
-      const illumination = [4,18,50,78,100,92,57,18][phaseIndex];
+      const now = new Date();
       return {
-        date: new Date().toLocaleDateString(),
-        phase: phase.name,
-        illumination: illumination + '%',
-        type: phase.kind,
-        ritual: phase.ritual,
-        moonWater: phase.moonWater,
-        crystals: phase.crystals,
-        beauty: phase.beauty,
-        house: phase.house,
-        shadow: phase.shadow,
-        note: phase.name === 'Waning Gibbous' ? 'Post-full-moon release and integration current.' : 'Live API moon data can be wired later; this version uses an in-app ritual model.'
+        date: now.toLocaleDateString(),
+        phase: 'Waning Gibbous',
+        illumination: '96–98%',
+        age: 'about 16.6 days',
+        moonSign: 'Scorpio Moon',
+        moonSignMeaning: 'Scorpio brings the work below the surface: emotional truth, shadow review, protection, energetic boundaries, power reclamation, and transformation without performance.',
+        nextNewMoon: 'May 16, 2026',
+        nextFullMoon: 'May 31, 2026',
+        type: 'Post-Full Moon Integration / Release Phase',
+        ritual: 'Review what the Full Moon revealed. Keep what is true. Release what has already shown itself. Do not keep negotiating with dead weight just because it has history.',
+        moonWater: 'Best for release water, cleansing water, banishing bowls, and emotional residue clearing. This is not the strongest night for attraction moon water; it is better for removal, repair, and integration.',
+        crystals: 'Clear crystals and tools after the Full Moon charge. Use smoke, sound, breath, salt-safe methods, or moonlight with the intention to remove residue and reset the tool.',
+        beauty: 'Repair, soothe, hydrate, oil, and simplify. This is beauty magik for recovery, not performance. Wash off projections and come back to your own face.',
+        house: 'Clear surfaces, empty trash, wash linens, sweep thresholds, and reset the room where the energy feels loud. Waning Gibbous supports integration through physical order.',
+        shadow: 'Scorpio asks: what truth am I avoiding because naming it would require a boundary? Let the answer be honest before it becomes dramatic.',
+        spells: 'Best spells now: release writing, cord softening or cutting, banishing bowl work, protection refresh, energetic boundary repair, grief container work, shadow journaling, house clearing, crystal/tool cleansing, and truth review.'
       };
     }
 
@@ -2453,6 +2661,7 @@
       const care = getDailyItem(selfCareRituals, 'care');
       const kindness = getDailyItem(kindnessActs, 'kind');
       const quote = getDailyItem(babyWitchQuotes, 'quote');
+      const witchIT = getDailyItem(witchITLessons, 'witchit');
       const statement = getDailyItem(dailyStatements, 'statement');
 
       document.getElementById('dailyStatement').textContent = statement;
@@ -2463,13 +2672,18 @@
         <dl>
           <div><dt>Date</dt><dd>${moon.date}</dd></div>
           <div><dt>Illumination</dt><dd>${moon.illumination}</dd></div>
+          <div><dt>Moon Age</dt><dd>${moon.age}</dd></div>
+          <div><dt>Moon Sign</dt><dd>${moon.moonSign}</dd></div>
+          <div><dt>Scorpio Meaning</dt><dd>${moon.moonSignMeaning}</dd></div>
+          <div><dt>Next Full Moon</dt><dd>${moon.nextFullMoon}</dd></div>
+          <div><dt>Next New Moon</dt><dd>${moon.nextNewMoon}</dd></div>
           <div><dt>Ritual Type</dt><dd>${moon.type}</dd></div>
           <div><dt>Moon Water</dt><dd>${moon.moonWater}</dd></div>
           <div><dt>Crystal Work</dt><dd>${moon.crystals}</dd></div>
           <div><dt>Beauty Magik</dt><dd>${moon.beauty}</dd></div>
           <div><dt>House Practice</dt><dd>${moon.house}</dd></div>
           <div><dt>Shadow Check</dt><dd>${moon.shadow}</dd></div>
-          <div><dt>Note</dt><dd>${moon.note}</dd></div>
+          <div><dt>Best Spellwork</dt><dd>${moon.spells}</dd></div>
         </dl>
       `;
 
@@ -2516,7 +2730,8 @@
         { key: 'beauty', action: 'New Beauty', label: 'Beauty Affirmation', title: 'Beauty Magik', text: beauty },
         { key: 'care', action: 'New Care Ritual', label: 'Self-Care Ritual', title: 'Sacred Maintenance', text: care },
         { key: 'kind', action: 'New Kindness', label: 'Sacred Act of Kindness', title: 'Human-Scale Magik', text: kindness },
-        { key: 'quote', action: 'New Quote', label: 'Snarky Baby Witches', title: 'Quote of the Day', text: quote }
+        { key: 'quote', action: 'New Quote', label: 'Snarky Baby Witches', title: 'Quote of the Day', text: quote },
+        { key: 'witchit', action: 'New Witch IT Lesson', label: 'Witch IT · Sacred Systems Lab', title: witchIT.title, text: `<strong>Practice:</strong> ${witchIT.practice}<br><strong>Prompt:</strong> ${witchIT.prompt}<br><strong>Boundary:</strong> ${witchIT.boundary}` }
       ];
 
       const stack = document.getElementById('ribbonStack');
@@ -2540,7 +2755,7 @@
       const refreshAll = document.getElementById('refreshAll');
       if (refreshAll) {
         refreshAll.addEventListener('click', () => {
-          ['tarot', 'spell', 'chant', 'beauty', 'care', 'kind', 'quote', 'statement'].forEach((key) => {
+          ['tarot', 'spell', 'chant', 'beauty', 'care', 'kind', 'quote', 'witchit', 'statement'].forEach((key) => {
             rerollCounts[key] = (rerollCounts[key] || 0) + 1;
           });
           render();
@@ -2572,7 +2787,8 @@
         beauty,
         care,
         kindness,
-        quote
+        quote,
+        witchIT: witchIT.title
       };
 
       renderArchives();
@@ -2595,7 +2811,7 @@
       const signs = load('signEntries');
 
       const snapshotList = document.getElementById('snapshotList');
-      snapshotList.innerHTML = snapshots.length ? snapshots.map(entry => archiveCard(entry.title, entry.stamp, `Moon: ${entry.moon} · Astrology: ${entry.astro} · Spell: ${entry.spell}`)).join('') : '<p class="empty-note">No daily ritual snapshots saved yet.</p>';
+      snapshotList.innerHTML = snapshots.length ? snapshots.map(entry => archiveCard(entry.title, entry.stamp, `Moon: ${entry.moon} · Astrology: ${entry.astro} · Spell: ${entry.spell} · Witch IT: ${entry.witchIT || "Not saved"}`)).join('') : '<p class="empty-note">No daily ritual snapshots saved yet.</p>';
 
       const ritualList = document.getElementById('ritualList');
       ritualList.innerHTML = rituals.length ? rituals.map(entry => archiveCard('Ritual Page', entry.stamp, entry.text)).join('') : '<p class="empty-note">No ritual pages recorded yet.</p>';
@@ -2640,6 +2856,75 @@
       });
     }
 
+
+    document.addEventListener('click', (event) => {
+      const rerollButton = event.target.closest('[data-reroll]');
+      if (rerollButton) {
+        event.preventDefault();
+        rerollDaily(rerollButton.dataset.reroll);
+      }
+    });
+
+    function collectAllSavedData() {
+      return {
+        exportedAt: new Date().toISOString(),
+        dailySnapshots: load('dailySnapshots'),
+        ritualEntries: load('ritualEntries'),
+        dreamEntries: load('dreamEntries'),
+        signEntries: load('signEntries')
+      };
+    }
+
+    function downloadFile(filename, content, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function exportBackupJson() {
+      const data = collectAllSavedData();
+      downloadFile('book-of-shadows-backup.json', JSON.stringify(data, null, 2), 'application/json');
+    }
+
+    function escapeCsv(value) {
+      const text = String(value ?? '');
+      return '"' + text.replaceAll('"', '""') + '"';
+    }
+
+    function exportCsv() {
+      const data = collectAllSavedData();
+      const rows = [['type','stamp','title','text']];
+      data.dailySnapshots.forEach(item => rows.push(['daily snapshot', item.stamp, item.title, `Moon: ${item.moon}; Astrology: ${item.astro}; Spell: ${item.spell}`]));
+      data.ritualEntries.forEach(item => rows.push(['ritual', item.stamp, 'Ritual Page', item.text]));
+      data.dreamEntries.forEach(item => rows.push(['dream', item.stamp, 'Dream Page', item.text]));
+      data.signEntries.forEach(item => rows.push(['sign', item.stamp, 'Sign / Synchronicity', item.text]));
+      const csv = rows.map(row => row.map(escapeCsv).join(',')).join('\n');
+      downloadFile('book-of-shadows-saved-pages.csv', csv, 'text/csv');
+    }
+
+    function importBackupFile(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(reader.result);
+          ['dailySnapshots','ritualEntries','dreamEntries','signEntries'].forEach(key => {
+            if (Array.isArray(data[key])) save(key, data[key]);
+          });
+          renderArchives();
+          alert('Book of Shadows backup restored.');
+        } catch (error) {
+          alert('That backup file could not be read.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
     document.getElementById('saveRitual').addEventListener('click', () => saveJournal('ritualEntries', 'ritualInput'));
     document.getElementById('saveDream').addEventListener('click', () => saveJournal('dreamEntries', 'dreamInput'));
     document.getElementById('saveSign').addEventListener('click', () => saveJournal('signEntries', 'signInput'));
@@ -2653,6 +2938,22 @@
     document.getElementById('saveToday').addEventListener('click', saveTodaySnapshot);
     const saveTodayTop = document.getElementById('saveTodayTop');
     if (saveTodayTop) saveTodayTop.addEventListener('click', saveTodaySnapshot);
+
+
+    const exportBackupButton = document.getElementById('exportBackup');
+    if (exportBackupButton) exportBackupButton.addEventListener('click', exportBackupJson);
+    const exportCsvButton = document.getElementById('exportCsv');
+    if (exportCsvButton) exportCsvButton.addEventListener('click', exportCsv);
+    const importBackupButton = document.getElementById('importBackupBtn');
+    const importBackupFileInput = document.getElementById('importBackupFile');
+    if (importBackupButton && importBackupFileInput) {
+      importBackupButton.addEventListener('click', () => importBackupFileInput.click());
+      importBackupFileInput.addEventListener('change', (event) => {
+        const file = event.target.files && event.target.files[0];
+        if (file) importBackupFile(file);
+        event.target.value = '';
+      });
+    }
 
     render();
   </script>

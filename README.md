@@ -19,3 +19,33 @@ Upload these files to the root of your `book-of-shadows` repository:
 ## v8 Section Hierarchy Update
 - Stronger section distinction so Moon, Astrology, Tarot, Ritual Notes, Journals, and Saved Pages no longer blend together.
 - Added category-specific washes, varied paper shapes, visual labels/tabs, stronger contrast, and asymmetrical hand-laid spacing while preserving the botanical frame.
+
+
+## v9 Updates
+- Removed user-facing API moon note.
+- Fixed reroll controls with stronger event handling.
+- Replaced baby-witch spell language with grounded, practical training practices.
+- Replaced chants with stronger Black Poppy protective language.
+- Added Export Backup JSON, Import Backup JSON, and Export CSV for Google Sheets.
+
+## Where entries save
+Entries save in this browser using localStorage. Use Export Backup or Export CSV to keep a copy or move entries to another browser/device.
+
+
+## v10 Moon Upgrade
+- In-browser calculated moon phase, moon age, and illumination estimate
+- Next New Moon and Next Full Moon estimates
+- No external API key required
+- No user-facing API language
+
+
+## v11 Witch IT
+Adds Witch IT · Sacred Systems Lab with daily AI practice lessons, copy/paste prompts, ethical boundaries, reroll controls, and saved snapshot support.
+
+
+## v12 Moon Correction
+- Corrected current moon display to Waning Gibbous.
+- Added 96–98% illumination range and about 16.6 day moon age.
+- Added next New Moon: May 16, 2026.
+- Added next Full Moon: May 31, 2026.
+- Added Scorpio Moon meaning and Waning Gibbous spellwork guidance.
