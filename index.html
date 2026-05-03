@@ -829,6 +829,281 @@
       .tarot-card-inner { min-height: 420px; }
       .divider-glyph::before, .divider-glyph::after { width: 56px; }
     }
+  
+
+    /* V8 SECTION HIERARCHY RESET: each area now has its own visual voice */
+    .composition {
+      grid-template-columns: minmax(280px, 0.95fr) minmax(340px, 1.05fr) minmax(280px, 0.95fr);
+      gap: 34px;
+    }
+
+    .sheet,
+    .leaf,
+    .tarot-stage,
+    .ribbon,
+    .archive-rail,
+    .medallion {
+      backdrop-filter: blur(1px);
+    }
+
+    #moonSheet {
+      border-color: rgba(74, 69, 98, 0.22);
+      border-radius: 42px 18px 36px 14px;
+      background:
+        linear-gradient(135deg, rgba(217,208,231,0.34), rgba(255,255,255,0.48) 44%, rgba(244,241,236,0.68)),
+        repeating-linear-gradient(0deg, rgba(45,41,39,0.025) 0 1px, transparent 1px 12px);
+      box-shadow: 0 22px 54px rgba(74, 69, 98, 0.09), inset 0 1px 0 rgba(255,255,255,0.35);
+      transform: rotate(-0.7deg) translateY(2px);
+      padding-left: 30px;
+    }
+
+    #moonSheet::after {
+      content: "☾";
+      position: absolute;
+      right: 22px;
+      top: 18px;
+      font-size: 42px;
+      color: rgba(184,167,202,0.42);
+      line-height: 1;
+    }
+
+    #astroSheet {
+      border-color: rgba(105, 96, 80, 0.20);
+      border-radius: 18px 38px 14px 34px;
+      background:
+        radial-gradient(circle at 85% 10%, rgba(185,168,146,0.18), transparent 30%),
+        linear-gradient(160deg, rgba(255,255,255,0.58), rgba(236,229,220,0.72));
+      box-shadow: 0 18px 48px rgba(70, 58, 46, 0.075), inset 0 1px 0 rgba(255,255,255,0.34);
+      transform: rotate(0.55deg) translateX(10px);
+      padding-left: 28px;
+    }
+
+    #astroSheet::after {
+      content: "✦";
+      position: absolute;
+      right: 24px;
+      top: 22px;
+      font-size: 28px;
+      color: rgba(185,168,146,0.54);
+    }
+
+    .sheet .sheet-label,
+    #moonSheet .sheet-label,
+    #astroSheet .sheet-label,
+    .leaf-label,
+    .archive-label,
+    .ribbon-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid rgba(45,41,39,0.10);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.36);
+      width: fit-content;
+    }
+
+    #moonSheet .sheet-label::before { content: "Lunar"; color: rgba(74,69,98,0.48); letter-spacing: .22em; }
+    #astroSheet .sheet-label::before { content: "Star"; color: rgba(105,96,80,0.48); letter-spacing: .22em; }
+
+    .tarot-stage {
+      background:
+        radial-gradient(circle at 50% 0%, rgba(184,167,202,0.28), transparent 30%),
+        linear-gradient(180deg, rgba(253,251,247,0.84), rgba(238,232,224,0.46));
+      border: 1px solid rgba(45,41,39,0.18);
+      box-shadow: 0 30px 70px rgba(43, 35, 30, 0.11), inset 0 1px 0 rgba(255,255,255,0.42);
+      transform: translateY(-12px);
+    }
+
+    .tarot-stage::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 16px;
+      width: 72px;
+      height: 72px;
+      border: 1px solid rgba(184,167,202,0.38);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    .tarot-card {
+      background:
+        linear-gradient(180deg, #fffdf8, #efe9e1),
+        radial-gradient(circle at center, rgba(184,167,202,0.12), transparent 40%);
+      border-color: rgba(45,41,39,0.20);
+      box-shadow: 0 28px 46px rgba(35,28,23,0.13);
+    }
+
+    .tarot-card-name,
+    .cardname {
+      font-size: 24px !important;
+      line-height: 1.12;
+    }
+
+    .tarot-head .page-sub,
+    .tarot-stage .page-sub {
+      font-size: 15px;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .ribbon-stack {
+      gap: 18px;
+    }
+
+    .ribbon {
+      border-radius: 6px 30px 24px 10px;
+      border-left-width: 3px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.56), rgba(255,255,255,0.28)),
+        linear-gradient(180deg, rgba(255,255,255,0.28), rgba(0,0,0,0.015));
+      box-shadow: 0 16px 38px rgba(38,31,26,0.055);
+    }
+
+    .ribbon:nth-child(1) {
+      border-left-color: rgba(76,18,29,0.50);
+      background: linear-gradient(115deg, rgba(76,18,29,0.08), rgba(255,255,255,0.48));
+      transform: translateX(-8px) rotate(-0.35deg);
+    }
+
+    .ribbon:nth-child(2) {
+      border-left-color: rgba(184,167,202,0.72);
+      background: linear-gradient(115deg, rgba(184,167,202,0.16), rgba(255,255,255,0.48));
+      transform: translateX(8px) rotate(0.24deg);
+    }
+
+    .ribbon:nth-child(3) {
+      border-left-color: rgba(185,168,146,0.72);
+      background: linear-gradient(115deg, rgba(185,168,146,0.16), rgba(255,255,255,0.48));
+      transform: translateX(-2px) rotate(-0.18deg);
+    }
+
+    .ribbon:nth-child(4) {
+      border-left-color: rgba(69,89,78,0.42);
+      background: linear-gradient(115deg, rgba(69,89,78,0.09), rgba(255,255,255,0.48));
+      transform: translateX(12px) rotate(0.35deg);
+    }
+
+    .ribbon:nth-child(5) {
+      border-left-color: rgba(45,41,39,0.32);
+      background: linear-gradient(115deg, rgba(45,41,39,0.055), rgba(255,255,255,0.48));
+      transform: translateX(-10px) rotate(0.18deg);
+    }
+
+    .ribbon:nth-child(6) {
+      border-left-color: rgba(140,92,108,0.45);
+      background: linear-gradient(115deg, rgba(140,92,108,0.095), rgba(255,255,255,0.48));
+      transform: translateX(4px) rotate(-0.32deg);
+    }
+
+    .ribbon .ribbon-title,
+    .ribbon h4 {
+      font-size: 19px;
+      margin-top: 4px;
+    }
+
+    .elemental-band {
+      padding: 8px 0 4px;
+      border-top: 1px solid rgba(45,41,39,0.08);
+      border-bottom: 1px solid rgba(45,41,39,0.08);
+    }
+
+    .medallion:nth-child(1) { background: radial-gradient(circle at top, rgba(76,18,29,0.10), rgba(255,255,255,0.25)); transform: rotate(-0.45deg); }
+    .medallion:nth-child(2) { background: radial-gradient(circle at top, rgba(184,167,202,0.16), rgba(255,255,255,0.25)); transform: rotate(0.28deg); }
+    .medallion:nth-child(3) { background: radial-gradient(circle at top, rgba(90,105,118,0.10), rgba(255,255,255,0.25)); transform: rotate(-0.18deg); }
+    .medallion:nth-child(4) { background: radial-gradient(circle at top, rgba(96,85,70,0.10), rgba(255,255,255,0.25)); transform: rotate(0.42deg); }
+
+    .journal-river {
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .leaf {
+      border-color: rgba(45,41,39,0.14);
+      box-shadow: 0 20px 48px rgba(34,27,22,0.065);
+    }
+
+    .leaf:nth-child(1) {
+      border-radius: 42px 18px 30px 14px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.66), rgba(248,244,238,0.46)),
+        linear-gradient(90deg, rgba(76,18,29,0.08), transparent 34%);
+      transform: rotate(-0.5deg);
+    }
+
+    .leaf:nth-child(2) {
+      border-radius: 22px 46px 16px 34px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.66), rgba(248,244,238,0.46)),
+        linear-gradient(90deg, rgba(184,167,202,0.15), transparent 38%);
+      transform: translateY(18px) rotate(0.42deg);
+    }
+
+    .leaf:nth-child(3) {
+      border-radius: 18px 26px 42px 16px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.66), rgba(248,244,238,0.46)),
+        linear-gradient(90deg, rgba(45,41,39,0.06), transparent 38%);
+      transform: rotate(-0.22deg);
+    }
+
+    .leaf textarea {
+      background: rgba(255,255,255,0.18);
+      border-top-color: rgba(45,41,39,0.13);
+      border-bottom-color: rgba(45,41,39,0.13);
+      padding-left: 4px;
+    }
+
+    .archive-river {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(45,41,39,0.09);
+    }
+
+    .archive-rail:first-child {
+      border-radius: 36px 14px 28px 18px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.58), rgba(217,208,231,0.16));
+      transform: rotate(-0.16deg);
+    }
+
+    .archive-rail:nth-child(2),
+    .sub-grid .archive-rail {
+      border-radius: 16px 34px 18px 30px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.56), rgba(185,168,146,0.12));
+    }
+
+    .archive-entry {
+      border-top-color: rgba(45,41,39,0.13);
+      background: rgba(255,255,255,0.24);
+      border-radius: 0 18px 18px 0;
+      padding-left: 14px;
+      border-left: 2px solid rgba(184,167,202,0.44);
+    }
+
+    .ink-control,
+    .pill,
+    .leaf .pill,
+    .ribbon .pill,
+    button {
+      box-shadow: 0 8px 18px rgba(34,27,22,0.055);
+    }
+
+    @media (max-width: 1180px) {
+      #astroSheet,
+      #moonSheet,
+      .leaf:nth-child(1),
+      .leaf:nth-child(2),
+      .leaf:nth-child(3),
+      .ribbon:nth-child(n),
+      .medallion:nth-child(n) {
+        transform: none;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -2212,7 +2487,7 @@
       document.getElementById('tarotStage').innerHTML = `
         <div class="tarot-head">
           <div class="sheet-label">Tarot Card of the Day</div>
-          <div class="page-sub">Daily card for truth, pattern & becoming without copyrighted deck art.</div>
+          <div class="page-sub">A daily card for truth, pattern, and becoming.</div>
         </div>
         <div class="tarot-card">
           <div class="tarot-card-inner">

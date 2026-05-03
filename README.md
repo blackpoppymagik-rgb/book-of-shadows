@@ -14,3 +14,8 @@ Upload these files to the root of your `book-of-shadows` repository:
 - Save Today's Ritual
 - Ritual, dream, and signs journals
 - Saved pages archive
+
+
+## v8 Section Hierarchy Update
+- Stronger section distinction so Moon, Astrology, Tarot, Ritual Notes, Journals, and Saved Pages no longer blend together.
+- Added category-specific washes, varied paper shapes, visual labels/tabs, stronger contrast, and asymmetrical hand-laid spacing while preserving the botanical frame.
