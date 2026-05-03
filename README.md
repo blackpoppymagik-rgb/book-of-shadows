@@ -49,3 +49,22 @@ Adds Witch IT · Sacred Systems Lab with daily AI practice lessons, copy/paste p
 - Added next New Moon: May 16, 2026.
 - Added next Full Moon: May 31, 2026.
 - Added Scorpio Moon meaning and Waning Gibbous spellwork guidance.
+
+
+## v13 Tarot Learning Upgrade
+
+This version replaces the generic tarot copy with deeper original educational interpretations for all 78 cards.
+
+Each card now includes:
+- Arcana / Suit / Element
+- Core keywords
+- Upright meaning
+- Reversed meaning
+- Love / relationships
+- Work / money
+- Spiritual / shadow lesson
+- Black Poppy reading
+- How to read this card
+- Journal prompt
+
+Tarot interpretations are original educational writings based on traditional tarot symbolism and the Black Poppy Magik ritual framework. They are not copied from The Tarot Guide, Tarot.com, or any third-party tarot guide.
