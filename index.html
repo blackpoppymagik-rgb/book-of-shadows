@@ -1,545 +1,75 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Book of Shadows | Black Poppy Magik Apothecary</title>
+  <meta name="description" content="A living ritual dashboard for moonwork, astrology, tarot, beauty magik, dreams, signs, and personal sovereignty." />
   <style>
     :root {
       --parchment: #f3eee6;
-      --warm-paper: #e9ddd0;
-      --paper-shadow: rgba(58, 47, 40, 0.08);
+      --warm-paper: #e8dccf;
       --ink: #2f2a26;
-      --soft-ink: rgba(47, 42, 38, 0.72);
-      --line: rgba(47, 42, 38, 0.18);
-      --veil: rgba(255, 255, 255, 0.28);
+      --soft-ink: rgba(47,42,38,.72);
+      --line: rgba(47,42,38,.18);
+      --veil: rgba(255,255,255,.32);
       --poppy: #7f2230;
-      --deep-poppy: #4c121d;
+      --deep-poppy: #451018;
       --dusty-rose: #b88f93;
-      --smoke: #8e857c;
       --silver: #b7b1a8;
+      --violet: #8b7a91;
+      --shadow: rgba(32,24,20,.13);
     }
-
-    * { box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.35), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(127,34,48,0.06), transparent 22%),
-        linear-gradient(180deg, #f8f4ee 0%, var(--parchment) 42%, var(--warm-paper) 100%);
-      font-family: Georgia, "Times New Roman", serif;
-    }
-
-    .landing-page,
-    .grimoire-page {
-      min-height: 100vh;
-      padding: 28px;
-      background:
-        radial-gradient(circle at top, rgba(255,255,255,0.42), transparent 28%),
-        linear-gradient(180deg, rgba(255,255,255,0.18), rgba(0,0,0,0));
-      position: relative;
-    }
-
-    .landing-frame,
-    .frame {
-      position: relative;
-      max-width: 1120px;
-      min-height: calc(100vh - 56px);
-      margin: 0 auto;
-      padding: 58px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,255,255,0.12)),
-        rgba(255,255,255,0.16);
-      border: 1px solid rgba(47, 42, 38, 0.22);
-      outline: 1px solid rgba(47, 42, 38, 0.08);
-      outline-offset: -10px;
-      box-shadow:
-        0 28px 80px var(--paper-shadow),
-        inset 0 0 0 1px rgba(255,255,255,0.18);
-      overflow: hidden;
-      backdrop-filter: blur(1px);
-      animation: inkBreath 16s ease-in-out infinite;
-    }
-
-    .landing-frame::before,
-    .frame::before {
-      content: "";
-      position: absolute;
-      inset: 20px;
-      border: 1px solid rgba(47, 42, 38, 0.12);
-      pointer-events: none;
-    }
-
-    .landing-frame::after,
-    .frame::after {
-      content: "✦  11:11  ✦";
-      position: absolute;
-      left: 18px;
-      top: 50%;
-      transform: rotate(-90deg) translateX(-50%);
-      transform-origin: left center;
-      letter-spacing: 0.28em;
-      font-size: 11px;
-      color: rgba(47, 42, 38, 0.45);
-      pointer-events: none;
-    }
-
-    .landing-frame {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .brand {
-      text-align: center;
-      text-transform: uppercase;
-      letter-spacing: 0.28em;
-      font-size: 11px;
-      color: var(--soft-ink);
-      margin-bottom: 16px;
-    }
-
-    .brand::before,
-    .brand::after {
-      content: "✿";
-      color: var(--poppy);
-      opacity: 0.7;
-      margin: 0 14px;
-    }
-
-    h1 {
-      margin: 0;
-      text-align: center;
-      font-size: clamp(44px, 7vw, 82px);
-      line-height: 1.05;
-      font-weight: 400;
-      letter-spacing: 0.03em;
-      color: var(--ink);
-    }
-
-    h1::after {
-      content: "";
-      display: block;
-      width: 140px;
-      height: 1px;
-      margin: 24px auto 0;
-      background: linear-gradient(90deg, transparent, rgba(47, 42, 38, 0.35), transparent);
-    }
-
-    .subtitle,
-    .landing-copy {
-      max-width: 740px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-    }
-
-    .subtitle {
-      margin-top: 18px;
-      margin-bottom: 22px;
-      font-size: 18px;
-      line-height: 1.7;
-      color: var(--soft-ink);
-    }
-
-    .landing-copy {
-      margin-top: 0;
-      margin-bottom: 32px;
-      font-size: 18px;
-      line-height: 1.85;
-      color: rgba(47, 42, 38, 0.78);
-    }
-
-    .daily-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin-top: 16px;
-    }
-
-    .card,
-    .journal-section,
-    .archive {
-      position: relative;
-      margin-top: 22px;
-      padding: 24px 24px 22px;
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0.18)),
-        var(--veil);
-      box-shadow:
-        0 14px 34px rgba(47, 42, 38, 0.05),
-        inset 0 1px 0 rgba(255,255,255,0.2);
-      overflow: hidden;
-    }
-
-    .card::before,
-    .journal-section::before,
-    .archive::before {
-      content: "";
-      position: absolute;
-      inset: 10px;
-      border: 1px solid rgba(47, 42, 38, 0.07);
-      border-radius: 14px;
-      pointer-events: none;
-    }
-
-    .card.wide { grid-column: span 2; }
-
-    h2,
-    h3 {
-      margin-top: 0;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      color: var(--ink);
-    }
-
-    h2 { font-size: 22px; }
-    h3 { font-size: 18px; margin-bottom: 10px; }
-
-    p { line-height: 1.7; color: rgba(47, 42, 38, 0.88); }
-    strong { color: var(--deep-poppy); }
-
-    .quote {
-      font-size: 18px;
-      line-height: 1.8;
-      color: var(--deep-poppy);
-      font-style: italic;
-    }
-
-    .sigil-row {
-      text-align: center;
-      letter-spacing: 0.38em;
-      color: var(--poppy);
-      opacity: 0.55;
-      margin: 18px 0 28px;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 160px;
-      margin-top: 12px;
-      padding: 18px;
-      border: 1px solid rgba(47, 42, 38, 0.22);
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.4));
-      color: var(--ink);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 16px;
-      line-height: 1.65;
-      resize: vertical;
-      box-shadow: inset 0 1px 4px rgba(47, 42, 38, 0.04);
-    }
-
-    textarea::placeholder { color: rgba(47, 42, 38, 0.5); font-style: italic; }
-
-    button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin: 18px auto 0;
-      padding: 13px 28px;
-      border: 1px solid rgba(47, 42, 38, 0.8);
-      border-radius: 999px;
-      background: linear-gradient(180deg, rgba(47,42,38,0.95), rgba(47,42,38,0.85));
-      color: var(--parchment);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 15px;
-      letter-spacing: 0.08em;
-      cursor: pointer;
-      transition: transform 0.2s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
-      box-shadow: 0 10px 24px rgba(47, 42, 38, 0.14);
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-      background: transparent;
-      color: var(--ink);
-      box-shadow: 0 10px 24px rgba(47, 42, 38, 0.08);
-    }
-
-    .archive-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .entry {
-      margin-top: 14px;
-      padding: 16px;
-      border: 1px solid rgba(47, 42, 38, 0.12);
-      border-radius: 16px;
-      background: rgba(255,255,255,0.35);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.16);
-    }
-
-    .entry strong {
-      display: inline-block;
-      margin-bottom: 6px;
-      font-size: 13px;
-      opacity: 0.75;
-      color: var(--soft-ink);
-    }
-
-    .entry p { margin: 0; }
-    .empty { color: var(--soft-ink); font-style: italic; }
-
-    .hidden { display: none; }
-
-    @keyframes inkBreath {
-      0%, 100% { filter: contrast(0.99) brightness(1); }
-      50% { filter: contrast(1.03) brightness(0.995); }
-    }
-
-    @media (max-width: 900px) {
-      .daily-grid,
-      .archive-grid { grid-template-columns: 1fr; }
-      .card.wide { grid-column: span 1; }
-    }
-
-    @media (max-width: 800px) {
-      .landing-page,
-      .grimoire-page { padding: 14px; }
-      .landing-frame,
-      .frame { padding: 34px 22px; }
-      .landing-frame::after,
-      .frame::after { display: none; }
-      .subtitle,
-      .landing-copy { font-size: 16px; }
-      h2 { font-size: 20px; }
-    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;color:var(--ink);background:radial-gradient(circle at top left, rgba(255,255,255,.36), transparent 30%),radial-gradient(circle at bottom right, rgba(127,34,48,.07), transparent 24%),linear-gradient(180deg,#f8f4ee 0%,var(--parchment) 42%,var(--warm-paper) 100%);font-family:Georgia,'Times New Roman',serif;}
+    .page{min-height:100vh;padding:26px;background:radial-gradient(circle at top, rgba(255,255,255,.45), transparent 28%);}
+    .frame{position:relative;max-width:1180px;min-height:calc(100vh - 52px);margin:0 auto;padding:58px;background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,.12)),rgba(255,255,255,.14);border:1px solid rgba(47,42,38,.24);outline:1px solid rgba(47,42,38,.08);outline-offset:-10px;box-shadow:0 28px 85px rgba(58,47,40,.1), inset 0 0 0 1px rgba(255,255,255,.18);overflow:hidden;animation:inkBreath 18s ease-in-out infinite;}
+    .frame:before{content:"";position:absolute;inset:20px;border:1px solid rgba(47,42,38,.12);pointer-events:none}.frame:after{content:"✦ 11:11 ✦";position:absolute;left:18px;top:50%;transform:rotate(-90deg) translateX(-50%);transform-origin:left center;letter-spacing:.3em;font-size:11px;color:rgba(47,42,38,.45)}
+    .landing{display:flex;flex-direction:column;justify-content:center;text-align:center}.brand{text-align:center;text-transform:uppercase;letter-spacing:.28em;font-size:11px;color:var(--soft-ink);margin-bottom:16px}.brand:before,.brand:after{content:"✿";color:var(--poppy);opacity:.75;margin:0 14px}h1{margin:0;text-align:center;font-size:clamp(44px,7vw,82px);line-height:1.05;font-weight:400;letter-spacing:.03em}h1:after{content:"";display:block;width:148px;height:1px;margin:24px auto 0;background:linear-gradient(90deg,transparent,rgba(47,42,38,.35),transparent)}.subtitle,.landing-copy{max-width:730px;margin-left:auto;margin-right:auto;text-align:center}.subtitle{margin-top:18px;margin-bottom:22px;font-size:18px;line-height:1.7;color:var(--soft-ink)}.landing-copy{font-size:18px;line-height:1.85;color:rgba(47,42,38,.8);margin-bottom:30px}.button-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.btn,button{display:inline-flex;align-items:center;justify-content:center;margin:12px auto 0;padding:13px 28px;border:1px solid rgba(47,42,38,.8);border-radius:999px;background:linear-gradient(180deg,rgba(47,42,38,.96),rgba(47,42,38,.86));color:var(--parchment);font-family:Georgia,'Times New Roman',serif;font-size:15px;letter-spacing:.08em;cursor:pointer;text-decoration:none;transition:.22s ease;box-shadow:0 10px 24px rgba(47,42,38,.14)}button:hover,.btn:hover{transform:translateY(-1px);background:transparent;color:var(--ink)}.ghost{background:transparent;color:var(--ink)}.hidden{display:none!important}.daily-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px}.card,.journal-section,.archive{position:relative;margin-top:22px;padding:24px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.18)),var(--veil);box-shadow:0 14px 34px rgba(47,42,38,.05),inset 0 1px 0 rgba(255,255,255,.22);overflow:hidden}.card:before,.journal-section:before,.archive:before{content:"";position:absolute;inset:10px;border:1px solid rgba(47,42,38,.07);border-radius:14px;pointer-events:none}.wide{grid-column:span 2}.card-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.sigil{font-size:26px;color:var(--poppy);opacity:.9;line-height:1}.meta{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:rgba(47,42,38,.52);margin:0 0 8px}.card-title{font-size:22px;margin:0 0 12px;font-weight:400;letter-spacing:.05em}h2,h3{font-weight:400;letter-spacing:.05em}h2{margin-top:0;font-size:23px}p{line-height:1.72;color:rgba(47,42,38,.9)}strong{color:var(--deep-poppy)}.quote{font-size:18px;line-height:1.85;color:var(--deep-poppy);font-style:italic}.prompt{border-left:2px solid rgba(127,34,48,.45);padding-left:14px;margin-top:14px;color:rgba(47,42,38,.75);font-style:italic}.action{margin-top:14px;padding:12px 14px;border-radius:14px;background:rgba(127,34,48,.06);border:1px solid rgba(127,34,48,.12)}textarea{width:100%;min-height:150px;margin-top:12px;padding:18px;border:1px solid rgba(47,42,38,.22);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.56),rgba(255,255,255,.42));color:var(--ink);font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.65;resize:vertical;box-shadow:inset 0 1px 4px rgba(47,42,38,.04)}textarea::placeholder{color:rgba(47,42,38,.5);font-style:italic}.archive-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.entry{margin-top:14px;padding:16px;border:1px solid rgba(47,42,38,.12);border-radius:16px;background:rgba(255,255,255,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.16)}.entry strong{display:inline-block;margin-bottom:6px;font-size:13px;opacity:.75;color:var(--soft-ink)}.empty{color:var(--soft-ink);font-style:italic}.saved-ritual{border-color:rgba(127,34,48,.22);background:rgba(127,34,48,.045)}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);padding:12px 18px;border-radius:999px;background:var(--ink);color:var(--parchment);box-shadow:0 10px 30px var(--shadow);z-index:10;opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1}.ornament{position:absolute;opacity:.13;color:var(--deep-poppy);font-size:110px;pointer-events:none}.ornament.one{right:26px;top:18px}.ornament.two{left:36px;bottom:20px;font-size:72px;color:var(--violet)}@keyframes inkBreath{0%,100%{filter:contrast(.99) brightness(1)}50%{filter:contrast(1.03) brightness(.995)}}@media(max-width:900px){.daily-grid,.archive-grid{grid-template-columns:1fr}.wide{grid-column:span 1}}@media(max-width:800px){.page{padding:14px}.frame{padding:34px 22px}.frame:after{display:none}.subtitle,.landing-copy{font-size:16px}h2{font-size:20px}.card-head{display:block}.ornament{display:none}}
   </style>
 </head>
 <body>
-  <main id="landing" class="landing-page">
-    <section class="landing-frame">
-      <p class="brand">Black Poppy Magik Apothecary</p>
-      <h1>Book of Shadows</h1>
-      <p class="subtitle">Protection · Reclamation · Sacred Truth · Becoming</p>
-      <p class="landing-copy">
-        A living ritual system for moonwork, astrology, tarot, beauty magik, dreams,
-        signs, synchronicities, and personal sovereignty.
-      </p>
-      <button id="enterButton">Enter Today’s Ritual</button>
-    </section>
-  </main>
-
-  <main id="grimoire" class="grimoire-page hidden">
-    <section class="frame">
-      <p class="brand">Black Poppy Magik Apothecary</p>
-      <h1>Book of Shadows</h1>
-      <p class="subtitle">Your power. Your system. Your reality.</p>
-      <div class="sigil-row">✦ ✿ 11:11 ✿ ✦</div>
-
-      <section class="daily-grid">
-        <article class="card wide" id="moonCard"></article>
-        <article class="card wide" id="astroCard"></article>
-        <article class="card" id="tarotCard"></article>
-        <article class="card" id="spellCard"></article>
-        <article class="card" id="chantCard"></article>
-        <article class="card" id="beautyCard"></article>
-        <article class="card" id="selfCareCard"></article>
-        <article class="card" id="kindnessCard"></article>
-        <article class="card" id="babyWitchCard"></article>
-      </section>
-
-      <section class="journal-section">
-        <h2>Ritual Journal</h2>
-        <textarea id="ritualText" placeholder="Name the truth. Protect the energy. Build the system."></textarea>
-        <button data-save="ritualEntries" data-input="ritualText" data-target="ritualArchive">Save Ritual Page</button>
-      </section>
-
-      <section class="journal-section">
-        <h2>Dream Journal</h2>
-        <textarea id="dreamText" placeholder="Record dreams, symbols, visitors, places, colors, animals, and anything that stayed with you."></textarea>
-        <button data-save="dreamEntries" data-input="dreamText" data-target="dreamArchive">Save Dream Page</button>
-      </section>
-
-      <section class="journal-section">
-        <h2>Signs & Synchronicities</h2>
-        <textarea id="signText" placeholder="11:11, animals, songs, names, repeated symbols, timing, odd little lightning strikes."></textarea>
-        <button data-save="synchronicityEntries" data-input="signText" data-target="signArchive">Save Sign</button>
-      </section>
-
-      <section class="archive">
-        <h2>Saved Pages</h2>
-        <div class="archive-grid">
-          <div>
-            <h3>Ritual Pages</h3>
-            <div id="ritualArchive"></div>
-          </div>
-          <div>
-            <h3>Dream Pages</h3>
-            <div id="dreamArchive"></div>
-          </div>
-          <div>
-            <h3>Signs</h3>
-            <div id="signArchive"></div>
-          </div>
-        </div>
-      </section>
-    </section>
-  </main>
-
+  <div id="app"></div>
+  <div id="toast" class="toast">Saved.</div>
   <script>
-    const tarotDeck = [
-      { name: "The Fool", upright: "A threshold. A beginning. The first step before the map exists.", reversed: "Hesitation, avoidance, or pretending you need permission to begin.", lesson: "Where are you waiting for certainty instead of trusting movement?" },
-      { name: "The Magician", upright: "Power made practical. Tools, focus, skill, and directed will.", reversed: "Scattered energy, misused influence, or forgetting what is already in your hands.", lesson: "What tool, skill, or truth are you underusing?" },
-      { name: "The High Priestess", upright: "Inner knowing, silence, intuition, and sacred information not yet spoken.", reversed: "Ignoring your instincts or asking others to confirm what your body already named.", lesson: "What do you know, but keep negotiating with?" },
-      { name: "Death", upright: "Transformation, ending, release, and the structure required for rebirth.", reversed: "Resistance, stagnation, fear of becoming someone new.", lesson: "What must end so the next version of you can breathe?" },
-      { name: "The Star", upright: "Healing, renewal, protection after collapse, and quiet faith returning.", reversed: "Doubt, spiritual fatigue, or forgetting that restoration is still movement.", lesson: "Where can you let yourself believe again without performing certainty?" }
+    const tarotDeck=[
+      {name:'The Fool',upright:'A threshold. A beginning. The first step before the map exists.',reversed:'Hesitation, avoidance, or pretending you need permission to begin.',lesson:'Where are you waiting for certainty instead of trusting movement?',read:'Read this card as the moment before action. Instinct is present. Risk is present. So is freedom.',shadow:'Do not call fear “discernment” just because it sounds wiser.',prompt:'What small beginning have you been making too dramatic to start?'},
+      {name:'The Magician',upright:'Power made practical. Tools, focus, skill, and directed will.',reversed:'Scattered energy, misused influence, or forgetting what is already in your hands.',lesson:'What tool, skill, or truth are you underusing?',read:'Energy becomes reality when attention becomes action.',shadow:'Do not collect tools to avoid using the ones you already have.',prompt:'What can I make real today with what is already mine?'},
+      {name:'The High Priestess',upright:'Inner knowing, silence, intuition, and sacred information not yet spoken.',reversed:'Ignoring your instincts or asking others to confirm what your body already named.',lesson:'What do you know, but keep negotiating with?',read:'Pay attention to dreams, symbols, pauses, and the unsaid.',shadow:'Secrecy is not the same as wisdom. Know when silence protects and when it hides.',prompt:'What truth keeps returning when the room gets quiet?'},
+      {name:'Death',upright:'Transformation, ending, release, and the structure required for rebirth.',reversed:'Resistance, stagnation, fear of becoming someone new.',lesson:'What must end so the next version of you can breathe?',read:'Death is not doom. It is the door closing because the old room is finished.',shadow:'Stop watering what has already left the garden.',prompt:'What am I preserving only because I know how to survive it?'},
+      {name:'The Star',upright:'Healing, renewal, protection after collapse, and quiet faith returning.',reversed:'Doubt, spiritual fatigue, or forgetting that restoration is still movement.',lesson:'Where can you let yourself believe again without performing certainty?',read:'This card is soft power. It does not shout. It restores.',shadow:'Healing does not require you to pretend the wound was a gift.',prompt:'What would restoration look like if it did not need to impress anyone?'},
+      {name:'Strength',upright:'Composure, courage, self-command, and power without performance.',reversed:'Force, self-doubt, emotional reactivity, or forgetting your own spine.',lesson:'Where can you lead yourself without gripping so hard?',read:'Strength is not domination. It is a hand on the lion and a steady breath.',shadow:'Do not confuse suppression with control.',prompt:'Where do I need softness that still has teeth?'},
+      {name:'The Hermit',upright:'Solitude, inner authority, study, and truth found away from noise.',reversed:'Isolation, avoidance, or refusing guidance because you are tired of people.',lesson:'What wisdom requires quiet before it becomes clear?',read:'This card is the lantern. It narrows the path so the next step can be seen.',shadow:'Do not make loneliness sound like enlightenment.',prompt:'What needs my private attention before it becomes public action?'}
     ];
-
-    const spells = [
-      { title: "Protection Practice", text: "Before opening your phone, place one hand on your chest and say: My energy is not public property." },
-      { title: "Threshold Clearing", text: "Stand in a doorway. Breathe once for what enters, once for what leaves. Name one thing that no longer has permission." },
-      { title: "Power Recall", text: "Say: I call my power back from every room where I left it trying to be understood." },
-      { title: "Truth Naming", text: "Write one sentence that tells the truth without decorating it. Let it stand there, unflinching." }
+    const spells=[
+      {title:'Protection Practice',text:'Before opening your phone, place one hand on your chest and say: My energy is not public property.',lesson:'Protection starts before access is granted.',prompt:'Where did I give access too freely this week?'},
+      {title:'Threshold Clearing',text:'Stand in a doorway. Breathe once for what enters, once for what leaves. Name one thing that no longer has permission.',lesson:'A threshold is not just a place. It is a decision.',prompt:'What am I done letting cross the threshold?'},
+      {title:'Power Recall',text:'Say: I call my power back from every room where I left it trying to be understood.',lesson:'Reclamation is daily architecture.',prompt:'Where did I abandon myself to be legible?'},
+      {title:'Truth Naming',text:'Write one sentence that tells the truth without decorating it.',lesson:'Truth does not need costume jewelry.',prompt:'What is the cleanest sentence I can say today?'},
+      {title:'Mirror Seal',text:'Look in the mirror and say: I return every gaze that tried to define me.',lesson:'Your image belongs to you first.',prompt:'What projection am I no longer carrying?'},
+      {title:'Salt Line Reset',text:'Sprinkle a tiny line of salt at the trash can, doorway, or sink. Sweep it away while naming what leaves with it.',lesson:'Release needs an exit route.',prompt:'What needs a physical ending?'},
+      {title:'Receipt Burning',text:'Write a draining thought on scrap paper. Tear it three times. Dispose of it. No ceremony for parasites.',lesson:'Not everything deserves a candlelit goodbye.',prompt:'What thought keeps charging rent in my head?'}
     ];
-
-    const chants = [
-      "I protect. I reclaim. I name truth.",
-      "My power. My system. My reality.",
-      "I write the story. I command the outcome.",
-      "Still here. Still holding. Still becoming.",
-      "I call my energy back and place it where it belongs."
-    ];
-
-    const beautyAffirmations = [
-      "I do not decorate myself for approval. I tend myself as proof that I am still here.",
-      "My beauty is not an apology. It is evidence of becoming.",
-      "I am allowed to be powerful, moisturized, and inconvenient to weak expectations.",
-      "I do not shrink to be easier to love.",
-      "My face, my body, my presence: all under my authority."
-    ];
-
-    const selfCareRituals = [
-      "Wash your face like you are removing every opinion that never belonged to you.",
-      "Drink water before you interpret the universe. Sometimes the omen is dehydration.",
-      "Brush your hair slowly. Call your power back strand by strand.",
-      "Put lotion on like devotion. You are not a machine with errands.",
-      "Clean one small surface. Physical order gives your nervous system a place to land."
-    ];
-
-    const kindnessActs = [
-      "Compliment someone with specificity. Cute is lazy. Tell them what actually shines.",
-      "Send the message you keep meaning to send. Love does not always need ceremony.",
-      "Let someone be complicated without making them perform an explanation.",
-      "Leave one space better than you found it.",
-      "Offer help quietly. Sacred kindness does not need a parade."
-    ];
-
-    const babyWitchQuotes = [
-      "Not every sign is a sign. Sometimes it is your nervous system asking for water.",
-      "Today’s spell is boundaries. Yes, that means not answering the text.",
-      "Before you hex the situation, try sleeping and eating something with protein.",
-      "Your intuition is not the same thing as spiraling. Learn the difference, little lightning rod.",
-      "A candle is not a substitute for accountability. Pretty flame, still your problem."
-    ];
-
-    function hashSeed(seed) {
-      let hash = 0;
-      for (let i = 0; i < seed.length; i++) hash = seed.charCodeAt(i) + ((hash << 5) - hash);
-      return Math.abs(hash);
-    }
-
-    function getDailyItem(items, salt = "") {
-      return items[hashSeed(new Date().toDateString() + salt) % items.length];
-    }
-
-    function getMoonData() {
-      const today = new Date();
-      const day = today.getDate();
-      if (day < 7) return { date: today.toLocaleDateString(), phase: "New Moon", type: "Seed Phase / Quiet Beginning", ritual: "Name what you are calling in. Keep it clean. Keep it honest.", beauty: "Reset. Clean skin, clean tools, clean intention.", house: "Clear one neglected corner. New cycles need space." };
-      if (day < 14) return { date: today.toLocaleDateString(), phase: "Waxing Moon", type: "Growth Phase / Building Power", ritual: "Feed what you started. One practical action. No overexplaining.", beauty: "Hydrate, strengthen, nourish. Build the glow like structure, not luck.", house: "Organize what supports momentum." };
-      if (day < 21) return { date: today.toLocaleDateString(), phase: "Full Moon", type: "Illumination Phase / Release + Charge", ritual: "Make moon water, charge crystals, cleanse your tools, and name what is done taking from you.", beauty: "Glow rituals, baths, oils, body care. Radiance as reclamation.", house: "Cleanse the house with sound, smoke, sweeping, or open windows." };
-      return { date: today.toLocaleDateString(), phase: "Waning Moon", type: "Release Phase / Clearing + Integration", ritual: "Let it fall away without chasing it down the road. Release is still an action.", beauty: "Detox, simplify, trim, soften. Less performance, more repair.", house: "Declutter aggressively. The dead weight knows where it lives." };
-    }
-
-    function getSunSeason() {
-      const today = new Date();
-      const month = today.getMonth() + 1;
-      const day = today.getDate();
-      const after = (m, d) => month > m || (month === m && day >= d);
-      const before = (m, d) => month < m || (month === m && day <= d);
-
-      if ((after(3, 21) && before(4, 19))) return { sign: "Aries", element: "Fire", focus: "Courage, initiation, direct action, clean beginnings.", beauty: "Bold movement. Wake the body. Wear the thing that makes you stand taller.", shadow: "Do not mistake urgency for truth." };
-      if ((after(4, 20) && before(5, 20))) return { sign: "Taurus", element: "Earth", focus: "Embodiment, patience, value, money, beauty, the body.", beauty: "Tend the body like sacred architecture. Moisturize, nourish, simplify.", shadow: "Do not confuse comfort with safety. Growth still gets to ask more from you." };
-      if ((after(5, 21) && before(6, 20))) return { sign: "Gemini", element: "Air", focus: "Language, curiosity, choices, messages, nervous system clarity.", beauty: "Lighten the routine. Breathe before answering. Let your mind have windows.", shadow: "Not every thought deserves a throne." };
-      if ((after(6, 21) && before(7, 22))) return { sign: "Cancer", element: "Water", focus: "Home, protection, ancestry, emotional truth, sacred softness.", beauty: "Soothe. Repair. Tend the shell and the heart inside it.", shadow: "Protection is not the same as hiding forever." };
-      if ((after(7, 23) && before(8, 22))) return { sign: "Leo", element: "Fire", focus: "Visibility, courage, pleasure, creative authority.", beauty: "Adorn yourself like you are allowed to be seen.", shadow: "Do not perform confidence when your spirit needs care." };
-      if ((after(8, 23) && before(9, 22))) return { sign: "Virgo", element: "Earth", focus: "Craft, order, devotion, refinement, repair.", beauty: "Edit the routine. Keep what works. Release what performs wellness but drains you.", shadow: "Perfection is often fear wearing good shoes." };
-      if ((after(9, 23) && before(10, 22))) return { sign: "Libra", element: "Air", focus: "Harmony, justice, beauty, relationship, balance.", beauty: "Choose elegance without abandoning your truth.", shadow: "Peacekeeping becomes betrayal when it costs your voice." };
-      if ((after(10, 23) && before(11, 21))) return { sign: "Scorpio", element: "Water", focus: "Depth, shadow, release, power, emotional honesty.", beauty: "Cleanse deeply. Oil the skin. Return to your own mystery.", shadow: "Intensity is not always intimacy." };
-      if ((after(11, 22) && before(12, 21))) return { sign: "Sagittarius", element: "Fire", focus: "Truth, expansion, study, philosophy, movement.", beauty: "Stretch. Walk. Let your body remember horizon.", shadow: "Being blunt is not the same as being free." };
-      if ((after(12, 22) || before(1, 19))) return { sign: "Capricorn", element: "Earth", focus: "Structure, legacy, discipline, long-range becoming.", beauty: "Build routines that respect your future self.", shadow: "You are not only useful when producing." };
-      if ((after(1, 20) && before(2, 18))) return { sign: "Aquarius", element: "Air", focus: "Systems, liberation, community, pattern disruption.", beauty: "Dress for the future version of you already arriving.", shadow: "Detachment can become a locked door." };
-      return { sign: "Pisces", element: "Water", focus: "Dreams, intuition, compassion, spiritual permeability.", beauty: "Soft care. More water. Less noise. Protect the dream channel.", shadow: "Absorbing everything is not empathy. It is a leak." };
-    }
-
-    function renderCards() {
-      const moon = getMoonData();
-      const astro = getSunSeason();
-      const tarotHash = hashSeed(new Date().toDateString() + "tarot");
-      const tarot = tarotDeck[tarotHash % tarotDeck.length];
-      const reversed = tarotHash % 2 === 0;
-      const spell = getDailyItem(spells, "spell");
-
-      document.getElementById("moonCard").innerHTML = `<h2>Moon Current</h2><p><strong>Date:</strong> ${moon.date}</p><p><strong>Phase:</strong> ${moon.phase}</p><p><strong>Type:</strong> ${moon.type}</p><p><strong>Ritual:</strong> ${moon.ritual}</p><p><strong>Beauty Magik:</strong> ${moon.beauty}</p><p><strong>House Practice:</strong> ${moon.house}</p>`;
-      document.getElementById("astroCard").innerHTML = `<h2>Astrology Current</h2><p><strong>Sun Season:</strong> ${astro.sign}</p><p><strong>Elemental Weather:</strong> ${astro.element}</p><p><strong>Ritual Focus:</strong> ${astro.focus}</p><p><strong>Beauty + Self-Care:</strong> ${astro.beauty}</p><p><strong>Shadow Check:</strong> ${astro.shadow}</p>`;
-      document.getElementById("tarotCard").innerHTML = `<h2>Tarot Card of the Day</h2><p><strong>${tarot.name} ${reversed ? "(Reversed)" : "(Upright)"}</strong></p><p>${reversed ? tarot.reversed : tarot.upright}</p><p><strong>Lesson:</strong> ${tarot.lesson}</p>`;
-      document.getElementById("spellCard").innerHTML = `<h2>Spell of the Day</h2><p><strong>${spell.title}</strong></p><p>${spell.text}</p>`;
-      document.getElementById("chantCard").innerHTML = `<h2>Chant of the Day</h2><p class="quote">${getDailyItem(chants, "chant")}</p>`;
-      document.getElementById("beautyCard").innerHTML = `<h2>Beauty Affirmation</h2><p class="quote">${getDailyItem(beautyAffirmations, "beauty")}</p>`;
-      document.getElementById("selfCareCard").innerHTML = `<h2>Self-Care Ritual</h2><p>${getDailyItem(selfCareRituals, "selfcare")}</p>`;
-      document.getElementById("kindnessCard").innerHTML = `<h2>Sacred Act of Kindness</h2><p>${getDailyItem(kindnessActs, "kindness")}</p>`;
-      document.getElementById("babyWitchCard").innerHTML = `<h2>Snarky Baby Witches</h2><p>${getDailyItem(babyWitchQuotes, "babywitch")}</p>`;
-    }
-
-    function loadEntries(key) {
-      return JSON.parse(localStorage.getItem(key)) || [];
-    }
-
-    function renderArchive(key, targetId, emptyText) {
-      const target = document.getElementById(targetId);
-      const entries = loadEntries(key);
-      target.innerHTML = entries.length ? entries.map(entry => `<article class="entry"><strong>${entry.date}</strong><p>${entry.text}</p></article>`).join("") : `<p class="empty">${emptyText}</p>`;
-    }
-
-    function refreshArchives() {
-      renderArchive("ritualEntries", "ritualArchive", "No ritual pages yet.");
-      renderArchive("dreamEntries", "dreamArchive", "No dreams recorded yet.");
-      renderArchive("synchronicityEntries", "signArchive", "No signs recorded yet.");
-    }
-
-    document.getElementById("enterButton").addEventListener("click", () => {
-      document.getElementById("landing").classList.add("hidden");
-      document.getElementById("grimoire").classList.remove("hidden");
-      renderCards();
-      refreshArchives();
-    });
-
-    document.querySelectorAll("button[data-save]").forEach(button => {
-      button.addEventListener("click", () => {
-        const key = button.getAttribute("data-save");
-        const inputId = button.getAttribute("data-input");
-        const targetId = button.getAttribute("data-target");
-        const input = document.getElementById(inputId);
-        const text = input.value.trim();
-        if (!text) return;
-        const entries = loadEntries(key);
-        entries.unshift({ text, date: new Date().toLocaleString() });
-        localStorage.setItem(key, JSON.stringify(entries));
-        input.value = "";
-        renderArchive(key, targetId, key === "ritualEntries" ? "No ritual pages yet." : key === "dreamEntries" ? "No dreams recorded yet." : "No signs recorded yet.");
-      });
-    });
+    const chants=['I protect. I reclaim. I name truth.','My power. My system. My reality.','I write the story. I command the outcome.','Still here. Still holding. Still becoming.','I call my energy back and place it where it belongs.','What is mine returns. What is false dissolves. What is true remains.','I do not chase the door. I become the key.'];
+    const beautyAffirmations=['I do not decorate myself for approval. I tend myself as proof that I am still here.','My beauty is not an apology. It is evidence of becoming.','I am allowed to be powerful, moisturized, and inconvenient to weak expectations.','I do not shrink to be easier to love.','My face, my body, my presence: all under my authority.','I am not here to be palatable. I am here to be sovereign.','I wear my becoming without asking the room to understand it.'];
+    const selfCareRituals=['Wash your face like you are removing every opinion that never belonged to you.','Drink water before you interpret the universe. Sometimes the omen is dehydration.','Brush your hair slowly. Call your power back strand by strand.','Put lotion on like devotion. You are not a machine with errands.','Clean one small surface. Physical order gives your nervous system a place to land.','Eat something with substance before making a spiritual conclusion.','Put your phone down for ten minutes and let your body become a room again.'];
+    const kindnessActs=['Compliment someone with specificity. “Cute” is lazy. Tell them what actually shines.','Send the message you keep meaning to send. Love does not always need ceremony.','Let someone be complicated without making them perform an explanation.','Leave one space better than you found it.','Offer help quietly. Sacred kindness does not need a parade.','Tip, thank, review, recommend, or uplift someone whose work made your day easier.','Be gentle with one animal, plant, or person who cannot repay you.'];
+    const babyWitchQuotes=['Not every sign is a sign. Sometimes it is your nervous system asking for water.','Today’s spell is boundaries. Yes, that means not answering the text.','Before you hex the situation, try sleeping and eating something with protein.','Your intuition is not the same thing as spiraling. Learn the difference, little lightning rod.','A candle is not a substitute for accountability. Pretty flame, still your problem.','If the spell requires you to betray yourself, congratulations, that is not a spell.','Clean your space before blaming the portal. The portal might be laundry.'];
+    function getDailyItem(items,salt=''){const seed=new Date().toDateString()+salt;let hash=0;for(let i=0;i<seed.length;i++){hash=seed.charCodeAt(i)+((hash<<5)-hash)}return items[Math.abs(hash)%items.length]}
+    function getDailyTarot(){const seed=new Date().toDateString()+'tarot';let hash=0;for(let i=0;i<seed.length;i++){hash=seed.charCodeAt(i)+((hash<<5)-hash)}const card=tarotDeck[Math.abs(hash)%tarotDeck.length];return {...card,isReversed:Math.abs(hash)%2===0}}
+    function getAstrologyData(){const today=new Date(),m=today.getMonth()+1,d=today.getDate();const seasons=[{sign:'Capricorn',start:[12,22],end:[1,19],element:'Earth',focus:'Structure, discipline, legacy, boundaries.',beauty:'Keep it simple, clean, and intentional. Authority does not need glitter.',shadow:'Do not confuse control with safety.'},{sign:'Aquarius',start:[1,20],end:[2,18],element:'Air',focus:'Vision, systems, community, future-self thinking.',beauty:'Wear one thing that feels strange and true.',shadow:'Do not detach so far that you abandon your own body.'},{sign:'Pisces',start:[2,19],end:[3,20],element:'Water',focus:'Dreams, intuition, compassion, spiritual boundaries.',beauty:'Softness is not weakness. Hydrate everything.',shadow:'Do not romanticize confusion.'},{sign:'Aries',start:[3,21],end:[4,19],element:'Fire',focus:'Action, courage, identity, direct movement.',beauty:'Red lip, clean skin, sharp choice. Move before doubt edits you.',shadow:'Do not call impatience intuition.'},{sign:'Taurus',start:[4,20],end:[5,20],element:'Earth',focus:'Embodiment, patience, value, money, beauty, the body.',beauty:'Tend the body like sacred architecture. Moisturize, nourish, simplify.',shadow:'Do not confuse comfort with safety. Growth still gets to ask more from you.'},{sign:'Gemini',start:[5,21],end:[6,20],element:'Air',focus:'Language, curiosity, messages, choices.',beauty:'Say what you mean. Edit what is noise.',shadow:'Do not mistake constant input for wisdom.'},{sign:'Cancer',start:[6,21],end:[7,22],element:'Water',focus:'Home, memory, emotional protection, lineage.',beauty:'Soothe the nervous system. Your softness needs a gate.',shadow:'Do not make nostalgia your landlord.'},{sign:'Leo',start:[7,23],end:[8,22],element:'Fire',focus:'Visibility, creativity, pride, heart power.',beauty:'Take up space on purpose. Radiance is not vanity.',shadow:'Do not perform confidence while ignoring the wound.'},{sign:'Virgo',start:[8,23],end:[9,22],element:'Earth',focus:'Ritual, refinement, service, practical magik.',beauty:'Clean the tools. Trim the excess. Make the system beautiful.',shadow:'Do not call self-criticism devotion.'},{sign:'Libra',start:[9,23],end:[10,22],element:'Air',focus:'Balance, beauty, justice, relational truth.',beauty:'Choose harmony that does not require self-erasure.',shadow:'Do not decorate a problem and call it peace.'},{sign:'Scorpio',start:[10,23],end:[11,21],element:'Water',focus:'Depth, shadow, transformation, energetic truth.',beauty:'Dark eyes, clean boundaries, no emotional bargaining.',shadow:'Do not confuse intensity with intimacy.'},{sign:'Sagittarius',start:[11,22],end:[12,21],element:'Fire',focus:'Meaning, movement, study, truth-seeking.',beauty:'Wear something that feels like motion. Tell the truth with aim.',shadow:'Do not use freedom as an excuse to avoid responsibility.'}];return seasons.find(s=>{const[sm,sd]=s.start,[em,ed]=s.end;if(sm>em)return(m===sm&&d>=sd)||(m===em&&d<=ed);return(m===sm&&d>=sd)||(m===em&&d<=ed)||(m>sm&&m<em)})||seasons[0]}
+    function getMoonData(){const today=new Date();return{date:today.toLocaleDateString(),phase:'Waning Gibbous',illumination:'96%',age:'16.57 days',type:'Post-Full Moon Integration / Release Phase',ritual:'Review what the Full Moon revealed. Release what has already shown itself. Cleanse tools, clear emotional residue, and stop negotiating with dead weight.',moonWater:'Best made on the Full Moon or the night immediately after. Today is better for release water, cleansing water, or banishing bowl work.',crystals:'Good for cleansing and clearing crystals after peak Full Moon charge. Use smoke, sound, salt-safe methods, or moonlight with intention.',beauty:'Repair, soothe, hydrate, and simplify. Let your body come down from peak energy instead of forcing radiance.',house:'Clear surfaces, empty trash, wash linens, and reset the room where your energy feels loud.',shadow:'Do not confuse emotional intensity with truth. Let the dust settle before you declare a final meaning.'}}
+    function loadEntries(key){try{return JSON.parse(localStorage.getItem(key))||[]}catch{return[]}}
+    function saveEntry(key,text){if(!text.trim())return null;const entry={text,date:new Date().toLocaleString()};const updated=[entry,...loadEntries(key)];localStorage.setItem(key,JSON.stringify(updated));return updated}
+    function saveTodayRitual(){const moon=getMoonData(),astrology=getAstrologyData(),tarot=getDailyTarot(),spell=getDailyItem(spells,'spell'),chant=getDailyItem(chants,'chant'),beauty=getDailyItem(beautyAffirmations,'beauty'),selfCare=getDailyItem(selfCareRituals,'selfcare'),kindness=getDailyItem(kindnessActs,'kindness'),babyWitch=getDailyItem(babyWitchQuotes,'babywitch');const text=`Moon: ${moon.phase} (${moon.illumination})\nAstrology: ${astrology.sign} Season / ${astrology.element}\nTarot: ${tarot.name} ${tarot.isReversed?'(Reversed)':'(Upright)'}\nSpell: ${spell.title} — ${spell.text}\nChant: ${chant}\nBeauty: ${beauty}\nSelf-Care: ${selfCare}\nKindness: ${kindness}\nSnarky Baby Witches: ${babyWitch}`;saveEntry('ritualEntries',text);renderDashboard();toast('Today’s ritual saved.')}
+    function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600)}
+    function card(symbol,meta,title,body,prompt='',wide=false){return `<article class="card ${wide?'wide':''}"><div class="card-head"><div><p class="meta">${meta}</p><h2 class="card-title">${title}</h2></div><div class="sigil">${symbol}</div></div>${body}${prompt?`<p class="prompt">${prompt}</p>`:''}</article>`}
+    function renderLanding(){document.getElementById('app').innerHTML=`<main class="page"><section class="frame landing"><div class="ornament one">✿</div><div class="ornament two">☾</div><p class="brand">Black Poppy Magik Apothecary</p><h1>Book of Shadows</h1><p class="subtitle">Protection · Reclamation · Sacred Truth · Becoming</p><p class="landing-copy">A living ritual system for moonwork, astrology, tarot, beauty magik, dreams, signs, synchronicities, and personal sovereignty.</p><div class="button-row"><button onclick="renderDashboard()">Enter Today’s Ritual</button><a class="btn ghost" href="#" onclick="renderDashboard();setTimeout(()=>document.getElementById('archive').scrollIntoView(),0);return false;">Open Archive</a></div></section></main>`}
+    function renderDashboard(){const moon=getMoonData(),astrology=getAstrologyData(),tarot=getDailyTarot(),spell=getDailyItem(spells,'spell'),chant=getDailyItem(chants,'chant'),beauty=getDailyItem(beautyAffirmations,'beauty'),selfCare=getDailyItem(selfCareRituals,'selfcare'),kindness=getDailyItem(kindnessActs,'kindness'),babyWitch=getDailyItem(babyWitchQuotes,'babywitch');document.getElementById('app').innerHTML=`<main class="page"><section class="frame"><div class="ornament one">✿</div><div class="ornament two">☾</div><p class="brand">Black Poppy Magik Apothecary</p><h1>Book of Shadows</h1><p class="subtitle">Your power. Your system. Your reality.</p><div class="button-row"><button onclick="saveTodayRitual()">Save Today’s Ritual</button><button class="ghost" onclick="renderLanding()">Return to Cover</button></div><section class="daily-grid">${card('☾','Lunar Current','Moon Current',`<p><strong>Date:</strong> ${moon.date}</p><p><strong>Phase:</strong> ${moon.phase}</p><p><strong>Illumination:</strong> ${moon.illumination}</p><p><strong>Moon Age:</strong> ${moon.age}</p><p><strong>Type:</strong> ${moon.type}</p><div class="action"><strong>Ritual:</strong> ${moon.ritual}</div><p><strong>Moon Water:</strong> ${moon.moonWater}</p><p><strong>Crystal Work:</strong> ${moon.crystals}</p><p><strong>Beauty Magik:</strong> ${moon.beauty}</p><p><strong>House Practice:</strong> ${moon.house}</p><p><strong>Shadow Check:</strong> ${moon.shadow}</p>`, '', true)}${card('♉','Astrology Current','Astrology Current',`<p><strong>Sun Season:</strong> ${astrology.sign}</p><p><strong>Elemental Weather:</strong> ${astrology.element}</p><p><strong>Ritual Focus:</strong> ${astrology.focus}</p><p><strong>Beauty + Self-Care:</strong> ${astrology.beauty}</p><p><strong>Shadow Check:</strong> ${astrology.shadow}</p>`)}${card('✦','Tarot Study','Tarot Card of the Day',`<p><strong>${tarot.name} ${tarot.isReversed?'(Reversed)':'(Upright)'}</strong></p><p>${tarot.isReversed?tarot.reversed:tarot.upright}</p><p><strong>Lesson:</strong> ${tarot.lesson}</p><p><strong>How to read it:</strong> ${tarot.read}</p><p><strong>Shadow Check:</strong> ${tarot.shadow}</p>`,tarot.prompt)}${card('🜃','Training Spell','Spell of the Day',`<p><strong>${spell.title}</strong></p><p>${spell.text}</p><p><strong>Lesson:</strong> ${spell.lesson}</p>`,spell.prompt)}${card('✧','Voice Practice','Chant of the Day',`<p class="quote">${chant}</p>`)}${card('✿','Beauty Magik','Beauty Affirmation',`<p class="quote">${beauty}</p>`)}${card('♢','Energetic Hygiene','Self-Care Ritual',`<p>${selfCare}</p>`)}${card('♡','Sacred Practice','Sacred Act of Kindness',`<p>${kindness}</p>`)}${card('☕','Beginner Wisdom','Snarky Baby Witches',`<p>${babyWitch}</p>`)}</section>${journal('Ritual Journal','ritualText','Name the truth. Protect the energy. Build the system.','ritualEntries','Save Ritual Page')}${journal('Dream Journal','dreamText','Record dreams, symbols, visitors, places, colors, animals, and anything that stayed with you.','dreamEntries','Save Dream Page')}${journal('Signs & Synchronicities','signText','11:11, animals, songs, names, repeated symbols, timing, odd little lightning strikes.','synchronicityEntries','Save Sign')}<section class="archive" id="archive"><h2>Saved Pages</h2><div class="archive-grid">${entriesBlock('Ritual Pages','ritualEntries')}${entriesBlock('Dream Pages','dreamEntries')}${entriesBlock('Signs','synchronicityEntries')}</div></section></section></main>`}
+    function journal(title,id,placeholder,key,label){return `<section class="journal-section"><h2>${title}</h2><textarea id="${id}" placeholder="${placeholder}"></textarea><button onclick="const v=document.getElementById('${id}').value;if(saveEntry('${key}',v)){document.getElementById('${id}').value='';renderDashboard();toast('${title} saved.')} ">${label}</button></section>`}
+    function entriesBlock(title,key){const entries=loadEntries(key);return `<div><h3>${title}</h3>${entries.length?entries.map(e=>`<article class="entry ${key==='ritualEntries'&&e.text.includes('Moon:')?'saved-ritual':''}"><strong>${e.date}</strong><p>${e.text.replace(/\n/g,'<br>')}</p></article>`).join(''):`<p class="empty">No ${title.toLowerCase()} yet.</p>`}</div>`}
+    renderLanding();
   </script>
 </body>
 </html>
